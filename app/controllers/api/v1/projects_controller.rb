@@ -1,10 +1,9 @@
-class ProjectsController < ApplicationController
+class Api::V1::ProjectsController < ApplicationController
   before_action :set_project, only: %i[ show update destroy ]
 
   # GET /projects
   def index
-    @projects = Project.all
-
+    @projects = Project.page(params[:page]).per(20) 
     render json: @projects
   end
 

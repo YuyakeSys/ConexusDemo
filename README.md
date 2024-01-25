@@ -21,4 +21,5 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+* cookies-next: 
+https://www.npmjs.com/package/cookies-next

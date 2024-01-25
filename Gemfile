@@ -52,3 +52,4 @@ gem "devise", "~> 4.9"
 gem "devise-api", "~> 0.1.3"
 
 gem "rails-controller-testing", "~> 1.0"
+gem 'kaminari'
