@@ -1,9 +1,12 @@
 "use client";
 import { loginUser } from "../../utils/auth";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
+import { AuthContext } from "@/app/utils/authContext";
+
 export default function Login() {
   const router = useRouter();
+  const { setUser } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,6 +19,7 @@ export default function Login() {
       const response = await loginUser(email, password);
       // Display a success message
       if (response.status == 200) {
+        setUser(response.data.resource_owner);
         router.push("/");
       }
       // Handle successful login, e.g., store tokens in local storage

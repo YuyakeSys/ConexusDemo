@@ -1,31 +1,23 @@
 // context/AuthContext.js
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { getCookie } from "cookies-next";
 
-const AuthContext = createContext();
-
-export const useAuth = () => useContext(AuthContext);
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    setIsLoggedIn(!!token);
+    // Load user from cookie at startup
+    const userData = getCookie("user");
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
   }, []);
 
-  const login = (token) => {
-    localStorage.setItem("authToken", token);
-    setIsLoggedIn(true);
-  };
-
-  const logout = () => {
-    localStorage.removeItem("authToken");
-    setIsLoggedIn(false);
-  };
-
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ user, setUser }}>
       {children}
     </AuthContext.Provider>
   );

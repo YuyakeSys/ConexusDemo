@@ -1,9 +1,13 @@
 // components/NavBar.js
-import React from "react";
+import { React, createContext, useContext } from "react";
 import { handleLogout } from "../utils/auth"; // adjust the path as necessary
 import { getCookie } from "cookies-next";
+import { AuthContext } from "../utils/authContext";
 
-export default function NavBar({ user, setUser }) {
+const NavUserContext = createContext();
+
+export default function NavBar() {
+  const { user, setUser } = useContext(AuthContext);
   const handleUserLogout = () => {
     handleLogout();
     setUser(null); // Update state to reflect logged out status
