@@ -10,13 +10,19 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleSignUp = () => {
     router.push("signup");
   };
   const handleLogin = async () => {
+    if (!email || !password) {
+      setError("Email and password are required.");
+      return; // Stop the function if validation fails
+    }
+
     try {
-      const response = await loginUser(email, password);
+      const response = await loginUser(email, password, rememberMe);
       // Display a success message
       if (response.status == 200) {
         setUser(response.data.resource_owner);
@@ -66,6 +72,19 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="rememberMe"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                />
+                <label class="form-check-label" for="rememberMe">
+                  Remember me
+                </label>
+              </div>
+              <br />
               <div className="form-buttons">
                 <button className="btn btn-primary me-2" onClick={handleLogin}>
                   Login

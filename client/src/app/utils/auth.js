@@ -3,12 +3,14 @@ import axios from "axios";
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
 const API_BASE_URL = "http://127.0.0.1:3000"; // Replace with your API URL
 
-export const loginUser = async (email, password, req, res) => {
+export const loginUser = async (email, password, rememberMe, req, res) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/users/tokens/sign_in`, {
       email,
       password,
     });
+
+    const maxAge = rememberMe ? 2592000 : 60 * 60; // 30 days or 1 hour
 
     const { token, refresh_token, resource_owner } = response.data;
 
@@ -18,20 +20,20 @@ export const loginUser = async (email, password, req, res) => {
       res,
       httpOnly: true,
       secure: process.env.NODE_ENV === "development",
-      maxAge: 60 * 60,
-    }); // 1 week
+      maxAge: maxAge,
+    });
     setCookie("refresh_token", refresh_token, {
       req,
       res,
       httpOnly: true,
       secure: process.env.NODE_ENV === "development",
-      maxAge: 60 * 60,
-    }); // 1 month
+      maxAge: maxAge,
+    });
     setCookie("user", JSON.stringify(resource_owner), {
       req,
       res,
-      maxAge: 60 * 60,
-    }); // 1 week
+      maxAge: maxAge,
+    });
 
     return response;
   } catch (error) {
