@@ -77,7 +77,7 @@ Please read [CONTRIBUTING.md](#) for details on our code of conduct, and the pro
 
 ### Authors
 
-- **Your Name** - _Initial work_ - [YourGitHub](https://github.com/YuyakeSys)
+- **Zhouyang Meng** - _Initial work_ - [Chester](https://github.com/YuyakeSys)
 
 ### Acknowledgments
 
