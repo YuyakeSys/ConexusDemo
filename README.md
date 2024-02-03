@@ -1,39 +1,86 @@
-# README
+# Project Title
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Brief description of your project.
 
-Things you may want to cover:
+## Getting Started
 
-- Ruby version
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+### Prerequisites
+
+What things you need to install the software and how to install them:
+
+- Ruby version: 3.2.2
+- Rails version: 7.0.8
 - System dependencies
 
-- Configuration
+### Installing
 
-- Database creation
+A step by step series of examples that tell you how to get a development environment running.
 
-- Database initialization
+#### Backend Setup
 
-- How to run the test suite
+1. **Install Ruby on Rails and Ruby**: Make sure you have Ruby and Ruby on Rails installed on your system. You can find the installation instructions on the [Official Rails Guides](https://guides.rubyonrails.org/getting_started.html#creating-a-new-rails-project-installing-rails).
 
-- Services (job queues, cache servers, search engines, etc.)
+2. **Install Gems**: Navigate to your Rails application directory and run:
 
-- Deployment instructions
+   ```bash
+   bundle install
+   ```
 
-- cookies-next:
-  https://www.npmjs.com/package/cookies-next
+   This command installs all the gems listed in your Gemfile.
 
-- Local deployment
-  Build and run the project:
-  BackendDemo: whole project file
-  Client: Next.js frontend
+3. **Database Creation and Initialization**:
 
-install the packages needed: npm install
-run the client: npm run dev
+   - Migrate the database to create the necessary tables:
 
-App: ruby on rails backend
-(Install ruby on rails and ruby)
-Install all the gems: bundle install
-Migrate the database: rails db:migrate
-Run the server locally: rails s
+     ```bash
+     rails db:migrate
+     ```
+
+#### Frontend Setup (Next.js Client)
+
+1. **Install Node.js and npm**: Ensure you have Node.js and npm installed on your system. You can download them from [nodejs.org](https://nodejs.org/).
+
+2. **Install Packages**: Navigate to your Next.js project directory and run:
+
+   ```bash
+   npm install
+   ```
+
+   This command installs all the packages listed in your `package.json` file.
+
+3. **Run the Client**:
+
+   ```bash
+   npm run dev
+   ```
+
+   This command starts the Next.js development server.
+
+### Running the Tests
+
+Explain how to run the automated tests for this system.
+
+### Deployment
+
+Add additional notes about how to deploy this on a live system.
+
+### Built With
+
+- [cookies-next](https://www.npmjs.com/package/cookies-next) - The cookies management tool used for Next.js.
+- [devise-api](https://github.com/nejdetkadir/devise-api) - Devise API for Ruby on Rails backend authentication.
+
+### Contributing
+
+Please read [CONTRIBUTING.md](#) for details on our code of conduct, and the process for submitting pull requests to us.
+
+### Authors
+
+- **Your Name** - _Initial work_ - [YourGitHub](https://github.com/YuyakeSys)
+
+### Acknowledgments
+
+- Hat tip to anyone whose code was used
+- Inspiration
+- etc.
