@@ -41,11 +41,20 @@ export const loginUser = async (email, password, rememberMe, req, res) => {
   }
 };
 
-export const signUpUser = async (email, password) => {
+export const signUpUser = async (
+  email,
+  password,
+  fullname,
+  education,
+  user_type
+) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/users/tokens/sign_up`, {
       email,
       password,
+      fullname,
+      education,
+      user_type,
     });
 
     const { token, refresh_token, resource_owner } = response.data;

@@ -49,7 +49,7 @@ end
 
 
 gem "devise", "~> 4.9"
-gem "devise-api", "~> 0.1.3"
+gem 'devise-api', github: 'nejdetkadir/devise-api', branch: 'main'
 
 gem "rails-controller-testing", "~> 1.0"
 gem 'kaminari'
