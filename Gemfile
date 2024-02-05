@@ -53,3 +53,6 @@ gem 'devise-api', github: 'nejdetkadir/devise-api', branch: 'main'
 
 gem "rails-controller-testing", "~> 1.0"
 gem 'kaminari'
+
+## for integrating notion
+gem 'notion-ruby-client'
