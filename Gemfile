@@ -55,4 +55,4 @@ gem "rails-controller-testing", "~> 1.0"
 gem 'kaminari'
 
 ## for integrating notion
-gem 'notion-ruby-client'
+gem 'notion-ruby-client', '~> 1.2', '>= 1.2.2'

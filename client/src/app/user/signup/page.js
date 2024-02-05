@@ -1,9 +1,10 @@
-// pages/login.js
+// pages/signup.js
 "use client";
 import { useState } from "react";
 import { signUpUser } from "../../utils/auth";
+import { useRouter } from "next/navigation";
 
-export default function Login() {
+export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -11,6 +12,7 @@ export default function Login() {
   const [education, setEducation] = useState("");
   const [userType, setUserType] = useState("");
   const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleSignUpUser = async () => {
     if (password != repeatPassword) {
@@ -26,8 +28,23 @@ export default function Login() {
         userType
       );
       // Handle successful login, e.g., store tokens in local storage
+      router.push("/");
     } catch (error) {
-      setError(error);
+      // Inspect the error object and handle it accordingly
+      if (error && error.error_description) {
+        // If error_description exists in the response, set it as the error message
+        setError(error.error_description[0]);
+      } else if (error && error.message) {
+        // If the error object has a message property, use it
+        setError(error.message);
+      } else if (typeof error === "string") {
+        // If the error is a string, use it directly
+        setError(error);
+      } else {
+        // Fallback error message
+        setError("An unknown error occurred");
+        console.error(error); // Log the error for debugging purposes
+      }
     }
   };
 

@@ -122,8 +122,18 @@ GEM
     erubi (1.12.0)
     faker (3.2.3)
       i18n (>= 1.8.11, < 2)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-mashify (0.1.1)
+      faraday (~> 2.0)
+      hashie
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
+    faraday-net_http (3.1.0)
+      net-http
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hashie (5.0.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     io-console (0.7.2)
@@ -155,6 +165,9 @@ GEM
     mini_mime (1.1.5)
     minitest (5.21.2)
     msgpack (1.7.2)
+    multipart-post (2.3.0)
+    net-http (0.4.1)
+      uri
     net-imap (0.4.9.1)
       date
       net-protocol
@@ -167,6 +180,11 @@ GEM
     nio4r (2.7.0)
     nokogiri (1.16.0-x64-mingw-ucrt)
       racc (~> 1.4)
+    notion-ruby-client (1.2.2)
+      faraday (>= 2.0)
+      faraday-mashify (>= 0.1.1)
+      faraday-multipart (>= 1.0.4)
+      hashie (~> 5)
     orm_adapter (0.5.0)
     psych (5.1.2)
       stringio
@@ -226,6 +244,7 @@ GEM
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2023.4)
       tzinfo (>= 1.0.0)
+    uri (0.13.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     websocket-driver (0.7.6)
@@ -243,6 +262,7 @@ DEPENDENCIES
   devise-api!
   faker
   kaminari
+  notion-ruby-client (~> 1.2, >= 1.2.2)
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.8)

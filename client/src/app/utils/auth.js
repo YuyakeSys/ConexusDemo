@@ -1,6 +1,7 @@
 // utils/auth.js
 import axios from "axios";
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
+
 const API_BASE_URL = "http://127.0.0.1:3000"; // Replace with your API URL
 
 export const loginUser = async (email, password, rememberMe, req, res) => {
@@ -46,7 +47,9 @@ export const signUpUser = async (
   password,
   fullname,
   education,
-  user_type
+  user_type,
+  req,
+  res
 ) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/users/tokens/sign_up`, {
@@ -56,7 +59,7 @@ export const signUpUser = async (
       education,
       user_type,
     });
-
+    console.log("sign up response", response);
     const { token, refresh_token, resource_owner } = response.data;
 
     // Set the session cookie on successful sign-up
@@ -79,10 +82,8 @@ export const signUpUser = async (
       res,
       maxAge: 60 * 60,
     }); // 1 week
-
-    const router = useRouter();
-    router.push("/");
   } catch (error) {
+    console.log(error);
     throw error.response?.data || "An error occurred";
   }
 };
