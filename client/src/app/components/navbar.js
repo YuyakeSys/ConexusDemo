@@ -1,16 +1,22 @@
 // components/NavBar.js
+"use client";
+
+import { useRouter } from "next/navigation";
+
 import { React, createContext, useContext } from "react";
 import { handleLogout } from "../utils/auth"; // adjust the path as necessary
-import { getCookie } from "cookies-next";
 import { AuthContext } from "../utils/authContext";
 
 const NavUserContext = createContext();
 
 export default function NavBar() {
+  const router = useRouter();
+
   const { user, setUser } = useContext(AuthContext);
   const handleUserLogout = () => {
     handleLogout();
     setUser(null); // Update state to reflect logged out status
+    router.push("/"); // Redirect to the home page
   };
 
   return (
@@ -67,7 +73,7 @@ export default function NavBar() {
             {user ? (
               <>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href={`/user/${user.id}`}>
                     {user.email}
                   </a>
                 </li>

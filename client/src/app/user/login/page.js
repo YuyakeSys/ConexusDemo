@@ -72,15 +72,15 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <div class="form-check">
+              <div className="form-check">
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   type="checkbox"
                   id="rememberMe"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
                 />
-                <label class="form-check-label" for="rememberMe">
+                <label className="form-check-label" htmlFor="rememberMe">
                   Remember me
                 </label>
               </div>
