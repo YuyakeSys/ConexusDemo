@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import ConsultantProfile from "./ConsultantProfile";
 
 const UserProfile = ({ params }) => {
   const [user, setUser] = useState(null);
@@ -68,49 +68,24 @@ const UserProfile = ({ params }) => {
     }
   };
 
+  //render proper user file
+  const renderProfileByType = () => {
+    console.log(user);
+    switch (user.user_type) {
+      case "consultant":
+        return <ConsultantProfile user={user} />;
+      case "entrepreneur":
+        return <EntrepreneurProfile user={user} />;
+      default:
+        return <div>Invalid user type</div>;
+    }
+  };
   // If user data hasn't been fetched yet, show a loading spinner or return null
   if (!user) return <div>Loading...</div>;
 
   return (
     <div className="container py-5">
-      <div className="container py-5">
-        <div className="row">
-          <div className="col-md-4">
-            <div className="text-center">
-              <img
-                src={user.image_url || "https://i.imgur.com/ZqBwLzL.jpeg"} // Replace with your direct image link
-                alt={`${user.fullname || "User"}'s Avatar`}
-                className="rounded-circle"
-                style={{ width: "100px", height: "100px" }}
-              />
-            </div>
-          </div>
-          <div className="col-md-8">
-            <h1>{user.fullname || "Full Name"}</h1>
-            <p>{user.education || "Education Details"}</p>
-            <div className="progress">
-              <div
-                className="progress-bar"
-                role="progressbar"
-                style={{ width: "88%" }}
-                aria-valuenow="88"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                Profile 88% complete
-              </div>
-            </div>
-            <button className="btn btn-primary mt-3" onClick={handleEditClick}>
-              Edit Profile
-            </button>
-          </div>
-        </div>
-        <div className="row mt-5">
-          <div className="col-12">
-            <h2>Featured projects</h2>
-          </div>
-        </div>
-      </div>
+      {renderProfileByType()}
 
       {/* Edit Modal */}
       {showEditModal && (
@@ -131,6 +106,7 @@ const UserProfile = ({ params }) => {
               </div>
               <div className="modal-body">
                 <form>
+                  {/* Common field */}
                   <div className="mb-3">
                     <label htmlFor="fullname" className="form-label">
                       Full Name
@@ -144,19 +120,55 @@ const UserProfile = ({ params }) => {
                       onChange={handleFormChange}
                     />
                   </div>
-                  <div className="mb-3">
-                    <label htmlFor="education" className="form-label">
-                      Education
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="education"
-                      name="education"
-                      value={editFormData.education}
-                      onChange={handleFormChange}
-                    />
-                  </div>
+
+                  {/* Conditional fields based on user type */}
+                  {user.user_type === "consultant" && (
+                    <div className="mb-3">
+                      <label htmlFor="education" className="form-label">
+                        Education
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="education"
+                        name="education"
+                        value={editFormData.education}
+                        onChange={handleFormChange}
+                      />
+                    </div>
+                  )}
+
+                  {user.user_type === "entrepreneur" && (
+                    <div className="mb-3">
+                      <label htmlFor="startupExperience" className="form-label">
+                        Startup Experience
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="startupExperience"
+                        name="startupExperience"
+                        value={editFormData.startupExperience || ""}
+                        onChange={handleFormChange}
+                      />
+                    </div>
+                  )}
+
+                  {user.user_type === "company" && (
+                    <div className="mb-3">
+                      <label htmlFor="industry" className="form-label">
+                        Industry
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="industry"
+                        name="industry"
+                        value={editFormData.industry || ""}
+                        onChange={handleFormChange}
+                      />
+                    </div>
+                  )}
                 </form>
               </div>
               <div className="modal-footer">
