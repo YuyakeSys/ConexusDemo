@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'skills/create'
   resources :startups
   resources :projects
   devise_for :users, controllers: {
@@ -8,6 +9,8 @@ Rails.application.routes.draw do
   # API routes should be in /api/v1
   namespace :api do
     namespace :v1 do 
+      resources :skills, only: [:create, :index]
+      get '/suggestions', to: 'skill_suggest#index'
       resources :posts
       resources :projects
       resources :users 

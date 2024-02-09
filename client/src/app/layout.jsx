@@ -7,6 +7,7 @@ import "./globals.css";
 import { getCookie } from "cookies-next";
 import { Inter } from "next/font/google";
 import { AuthProvider } from "./utils/authContext";
+import SkillSuggest from "./components/skill_suggest";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
           <AuthProvider>
             <NavBar />
             <div className="container mt-4">{children}</div>
+            <SkillSuggest />
           </AuthProvider>
           <Footer />
         </body>
