@@ -22,4 +22,9 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: conexus_db
+  pool: 5
+  username: ningan
+  password: <%= ENV['CONEXUS_DB_PASSWORD'] %>
