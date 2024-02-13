@@ -9,7 +9,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  POST /resource
+  # POST /resource
   def create
     # Check if the email already exists
     if User.exists?(email: sign_up_params[:email])
