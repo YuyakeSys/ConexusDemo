@@ -52,6 +52,20 @@ const SkillSuggest = () => {
       .catch(error => {
         console.error('Failed to save to skills:', error);
       });
+
+      const allCookies = document.cookie;
+      const decodedCookies = decodeURIComponent(allCookies);
+      const cookieArray = decodedCookies.split(';').map(cookie => cookie.trim());
+      const userCookie = cookieArray.find(cookie => cookie.startsWith('user='));
+
+      const userID = JSON.parse(userCookie.split('=')[1]).id;
+      axios.post('http://localhost:3000/api/v1/saveUserSkill', { value: inputValue, user_id: userID })
+      .then(response => {
+        console.log('Saved successfully to user_skills!');
+      })
+      .catch(error => {
+        console.error('Failed to save to user_skills:', error);
+      });
    }
   };
 
