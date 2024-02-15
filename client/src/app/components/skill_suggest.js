@@ -8,13 +8,16 @@ const SkillSuggest = () => {
   const handleChange = async (event) => {
     const { value } = event.target;
     setInputValue(value);
-
-    // Fetch suggestions from backend based on input value
-    try {
-      const response = await axios.get(`http://localhost:3000/api/v1/suggestions?query=${value}`);
-      setSuggestions(response.data);
-    } catch (error) {
-      console.error("Didn't get response from back-end, the error information is: ", error);
+    if (value !== '') {
+      // Fetch suggestions from backend based on input value
+      try {
+        const response = await axios.get(`http://localhost:3000/api/v1/suggestions?query=${value}`);
+        setSuggestions(response.data);
+      } catch (error) {
+        console.error("Didn't get response from back-end, the error information is: ", error);
+      }
+    } else {
+      setSuggestions([]);
     }
   };
 
