@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_09_075731) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_12_070803) do
   create_table "devise_api_tokens", force: :cascade do |t|
     t.string "resource_owner_type", null: false
     t.bigint "resource_owner_id", null: false
@@ -68,6 +68,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_09_075731) do
     t.index ["user_id"], name: "index_startups_on_user_id"
   end
 
+  create_table "user_skills", force: :cascade do |t|
+    t.integer "users_id", null: false
+    t.integer "skills_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["skills_id"], name: "index_user_skills_on_skills_id"
+    t.index ["users_id"], name: "index_user_skills_on_users_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -85,4 +94,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_09_075731) do
   end
 
   add_foreign_key "startups", "users"
+  add_foreign_key "user_skills", "skills", column: "skills_id"
+  add_foreign_key "user_skills", "users", column: "users_id"
 end
