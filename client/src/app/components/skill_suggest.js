@@ -4,7 +4,7 @@ import axios from 'axios';
 const SkillSuggest = () => {
   const [inputValue, setInputValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-
+  
   const handleChange = async (event) => {
     const { value } = event.target;
     setInputValue(value);
@@ -42,21 +42,39 @@ const SkillSuggest = () => {
     setSuggestions([]);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      console.log("I am pressing enter key")
+      axios.post('http://localhost:3000/api/v1/saveSkill', { value: inputValue })
+      .then(response => {
+        console.log('Saved successfully to skills!');
+      })
+      .catch(error => {
+        console.error('Failed to save to skills:', error);
+      });
+   }
+  };
+
   return (
     <div>
-      <input 
-        type="text" 
-        value={inputValue} 
-        onChange={handleChange} 
-        placeholder="Type your skills..." 
-      />
-      <ul>
-        {suggestions.map((suggestion, index) => (
-          <li key={index} onClick={() => handleSelect(suggestion)}>
-            {suggestion}
-          </li>
-        ))}
-      </ul>
+      <div>
+        <input 
+          type="text" 
+          value={inputValue} 
+          onChange={handleChange} 
+          onKeyDown={handleKeyDown} 
+          placeholder="Type your skills..." 
+        />
+      </div>
+      <div>
+        <ul>
+          {suggestions.map((suggestion, index) => (
+            <li key={index} onClick={() => handleSelect(suggestion)}>
+              {suggestion}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

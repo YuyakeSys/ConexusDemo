@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :skills, only: [:create, :index]
       get '/suggestions', to: 'skill_suggest#index'
       post '/saveUserSkill', to: 'save_skill#save_user_skill'
+      post '/saveSkill', to: 'save_skill#save_skill'
       resources :posts
       resources :projects
       resources :users 
