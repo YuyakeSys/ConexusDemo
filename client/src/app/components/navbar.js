@@ -20,7 +20,7 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-light">
+    <nav className="navbar navbar-expand-lg nav-green-background">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
           <img

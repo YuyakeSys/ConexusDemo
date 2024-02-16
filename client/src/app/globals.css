@@ -87,12 +87,15 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: #e8f5e9;
+}
+
+.light-green-background {
+  background-color: #8effb7; /* A light green color */
+}
+
+.nav-green-background {
+  background-color: #81fb859a; /* A light green color */
 }
 
 a {

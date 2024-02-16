@@ -3,30 +3,39 @@
 import { useState } from "react";
 import { signUpUser } from "../../utils/auth";
 import { useRouter } from "next/navigation";
+import FormField from "./formField";
+import RoleSpecificForm from "./roleSpecificForm";
 
 export default function Signup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [education, setEducation] = useState("");
-  const [userType, setUserType] = useState("");
+  const [userDetails, setUserDetails] = useState({
+    email: "",
+    password: "",
+    repeatPassword: "",
+    fullName: "",
+    education: "",
+    companyStatus: "",
+    consultantLocation: "",
+    entrepreneurMission: "",
+    userType: "",
+  });
   const [error, setError] = useState("");
   const router = useRouter();
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserDetails({ ...userDetails, [name]: value });
+  };
+
   const handleSignUpUser = async () => {
+    const { email, password, repeatPassword, fullName, education, userType } =
+      userDetails;
     if (password != repeatPassword) {
       alert("Not the same password");
       return;
     }
+
     try {
-      const response = await signUpUser(
-        email,
-        password,
-        fullName,
-        education,
-        userType
-      );
+      await signUpUser(email, password, fullName, education, userType);
       // Handle successful login, e.g., store tokens in local storage
       router.push("/");
     } catch (error) {
@@ -48,37 +57,6 @@ export default function Signup() {
     }
   };
 
-  const renderRoleSpecificForm = () => {
-    switch (userType) {
-      case "consultant":
-        return (
-          <div className="mb-3">
-            <label htmlFor="identification" className="form-label">
-              Consultant form
-            </label>
-          </div>
-        );
-      case "company":
-        return (
-          <div className="mb-3">
-            <label htmlFor="identification" className="form-label">
-              Company
-            </label>
-          </div>
-        );
-      case "entrepreneur":
-        return (
-          <div className="mb-3">
-            <label htmlFor="identification" className="form-label">
-              entrepreneur form
-            </label>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -86,90 +64,74 @@ export default function Signup() {
           <h1 className="mb-3">Sign Up</h1>
           <div className="card p-4">
             <div className="card-body">
-              <div className="mb-3">
-                <label htmlFor="userType" className="form-label">
-                  I am a...
-                </label>
-                <select
-                  className="form-select"
-                  id="userType"
-                  value={userType}
-                  onChange={(e) => setUserType(e.target.value)}
-                >
-                  <option value="">Select your role</option>
-                  <option value="entrepreneur">Entrepreneur</option>
-                  <option value="consultant">Consultant</option>
-                  <option value="company">Company</option>
-                </select>
+              <div className="card-title">
+                <FormField
+                  label="I am a..."
+                  name="userType"
+                  type="select"
+                  options={["entrepreneur", "consultant", "company"]}
+                  value={userDetails.userType}
+                  onChange={handleChange}
+                />
               </div>
-              {userType && (
+              {userDetails.userType && (
                 <>
-                  <div className="mb-3">
-                    <label htmlFor="fullName" className="form-label">
-                      Full Name
-                    </label>
-                    <input
+                  <div className="row">
+                    <div className="col-md-6">
+                      {userDetails.userType === "company" ? (
+                        <FormField
+                          label="Company Name"
+                          name="fullName"
+                          type="text"
+                          value={userDetails.fullName}
+                          onChange={handleChange}
+                        />
+                      ) : (
+                        <FormField
+                          label="Full Name"
+                          name="fullName"
+                          type="text"
+                          value={userDetails.fullName}
+                          onChange={handleChange}
+                        />
+                      )}
+                      <FormField
+                        label="Email"
+                        name="email"
+                        type="email"
+                        value={userDetails.email}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <FormField
+                        label="Password"
+                        name="password"
+                        type="password"
+                        value={userDetails.password}
+                        onChange={handleChange}
+                      />
+                      <FormField
+                        label="Repeat Password"
+                        name="repeatPassword"
+                        type="password"
+                        value={userDetails.repeatPassword}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <FormField
+                      label="Education"
+                      name="education"
                       type="text"
-                      className="form-control"
-                      id="fullName"
-                      placeholder="Enter your full name"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
+                      value={userDetails.education}
+                      onChange={handleChange}
                     />
                   </div>
-                  <div className="mb-3">
-                    <label htmlFor="email" className="form-label">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="email"
-                      placeholder="Enter your email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="password" className="form-label">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="password"
-                      placeholder="Enter your password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="repeatPassword" className="form-label">
-                      Repeat Password
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="repeatPassword"
-                      placeholder="Repeat your password"
-                      value={repeatPassword}
-                      onChange={(e) => setRepeatPassword(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="education" className="form-label">
-                      Education
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="education"
-                      placeholder="Enter your education"
-                      value={education}
-                      onChange={(e) => setEducation(e.target.value)}
-                    />
-                  </div>
-                  {renderRoleSpecificForm()}
+                  <RoleSpecificForm
+                    userType={userDetails.userType}
+                    userDetails={userDetails}
+                    handleChange={handleChange}
+                  />
                   <button
                     className="btn btn-primary"
                     onClick={handleSignUpUser}
