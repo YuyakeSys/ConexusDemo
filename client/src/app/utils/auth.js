@@ -82,6 +82,8 @@ export const signUpUser = async (
       res,
       maxAge: 60 * 60,
     }); // 1 week
+
+    return resource_owner;
   } catch (error) {
     console.log(error);
     throw error.response?.data || "An error occurred";

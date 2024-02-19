@@ -1,12 +1,14 @@
 // pages/signup.js
 "use client";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { signUpUser } from "../../utils/auth";
 import { useRouter } from "next/navigation";
 import FormField from "./formField";
 import RoleSpecificForm from "./roleSpecificForm";
+import { AuthContext } from "@/app/utils/authContext";
 
 export default function Signup() {
+  const { setUser } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
@@ -35,8 +37,15 @@ export default function Signup() {
     }
 
     try {
-      await signUpUser(email, password, fullName, education, userType);
+      const response = await signUpUser(
+        email,
+        password,
+        fullName,
+        education,
+        userType
+      );
       // Handle successful login, e.g., store tokens in local storage
+      setUser(response);
       router.push("/");
     } catch (error) {
       // Inspect the error object and handle it accordingly

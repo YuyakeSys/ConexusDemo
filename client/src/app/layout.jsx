@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
         <title>title</title>
       </Head>
       <html lang="en">
-        <body className={`${inter.className} light-green-background`}>
+        <body className={`${inter.className}`}>
           <AuthProvider>
             <NavBar />
             <div className="container mt-4">{children}</div>
