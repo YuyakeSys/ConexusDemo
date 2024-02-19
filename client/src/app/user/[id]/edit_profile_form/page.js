@@ -1,7 +1,11 @@
+  
+  
+"use client"
+
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const SkillSuggest = () => {
+function EditProfileForm(props) {
   const [inputValue, setInputValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   
@@ -69,7 +73,7 @@ const SkillSuggest = () => {
       .catch(error => {
         console.error('Failed to save to user_skills:', error);
       });
-   }
+    }
   };
 
   return (
@@ -94,6 +98,6 @@ const SkillSuggest = () => {
       </div>
     </div>
   );
-};
+}
 
-export default SkillSuggest;
+export default EditProfileForm;

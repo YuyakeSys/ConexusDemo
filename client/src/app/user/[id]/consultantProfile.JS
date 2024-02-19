@@ -1,9 +1,16 @@
 "use client";
 
 import React from "react";
+import { useRouter } from 'next/navigation';
 
 const ConsultantProfile = ({ user }) => {
   // Assuming you might have consultant-specific functionalities, you can add them here
+  const router = useRouter();
+
+  const handleClick = () => {
+    console.log(`/user/${user.id}/edit_profile_form`)
+    router.push(`/user/${user.id}/edit_profile_form`);
+  };
 
   return (
     <div className="container py-5">
@@ -36,7 +43,7 @@ const ConsultantProfile = ({ user }) => {
             </div>
           </div>
           {/* You can add or adjust buttons and actions specific to consultants */}
-          <button className="btn btn-primary mt-3">Edit</button>
+          <button className="btn btn-primary mt-3" onClick={handleClick}>Edit</button>
         </div>
       </div>
       {/* Any additional sections or functionalities specific to consultants can be added here */}
