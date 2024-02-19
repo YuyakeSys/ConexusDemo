@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import ConsultantProfile from "./ConsultantProfile";
+import ConsultantProfile from "./consultantProfile";
 
 const UserProfile = ({ params }) => {
   const [user, setUser] = useState(null);
@@ -86,7 +86,6 @@ const UserProfile = ({ params }) => {
   return (
     <div className="container py-5">
       {renderProfileByType()}
-
       {/* Edit Modal */}
       {showEditModal && (
         <div
