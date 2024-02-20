@@ -48,6 +48,7 @@ export const signUpUser = async (
   fullname,
   education,
   user_type,
+  skills,
   req,
   res
 ) => {
@@ -57,6 +58,7 @@ export const signUpUser = async (
       password,
       fullname,
       education,
+      skills,
       user_type,
     });
     console.log("sign up response", response);

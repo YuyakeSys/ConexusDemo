@@ -36,6 +36,7 @@ function RoleSpecificForm({ userType, userDetails, handleChange }) {
             value={userDetails.consultantLocation || ""}
             onChange={handleChange}
           />
+          
         </div>
       )}
 

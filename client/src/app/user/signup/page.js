@@ -19,6 +19,7 @@ export default function Signup() {
     consultantLocation: "",
     entrepreneurMission: "",
     userType: "",
+    
   });
   const [error, setError] = useState("");
   const router = useRouter();

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import ConsultantProfile from "./consultantProfile";
+import FromProfile from "../../components/form_profile";
 
 const UserProfile = ({ params }) => {
   const [user, setUser] = useState(null);
@@ -86,6 +87,9 @@ const UserProfile = ({ params }) => {
   return (
     <div className="container py-5">
       {renderProfileByType()}
+      <button className="btn btn-primary mt-3" onClick={handleEditClick}>
+        Edit
+      </button>
       {/* Edit Modal */}
       {showEditModal && (
         <div
@@ -118,6 +122,7 @@ const UserProfile = ({ params }) => {
                       value={editFormData.fullname}
                       onChange={handleFormChange}
                     />
+                    <FromProfile />
                   </div>
 
                   {/* Conditional fields based on user type */}
