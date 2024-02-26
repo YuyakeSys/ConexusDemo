@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
 function FormProfile(props) {
@@ -7,20 +7,36 @@ function FormProfile(props) {
     const skillsInputRef = useRef();
     const [inputValue, setInputValue] = useState('');
     const [suggestions, setSuggestions] = useState([]);
+    const [isFirstInput, setIsFirstInput] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async(value) => {
+            try{
+                const skill_list = await axios.get(`http://localhost:3000/api/v1/suggestions?query=${value}`);
+                setSuggestions(skill_list.data);
+                console.log(suggestions)
+            } catch (error) {
+                console.error("No response:", error);
+            }
+        };
+    
+        if (isFirstInput) {
+            fetchData(inputValue);
+        }
+    }, [isFirstInput, inputValue]);
     
     const handleChange = async (event) => {
         const { value } = event.target;
         setInputValue(value);
-        if (value !== '') {
-        // Fetch suggestions from backend based on input value
-        try {
-            const response = await axios.get(`http://localhost:3000/api/v1/suggestions?query=${value}`);
-            setSuggestions(response.data);
-        } catch (error) {
-            console.error("Didn't get response from back-end, the error information is: ", error);
-        }
+
+        if (value.length === 1) {
+            setIsFirstInput(true);
+        } else if (value === '') {
+            setSuggestions([])
+            setIsFirstInput(false);
         } else {
-        setSuggestions([]);
+            setSuggestions(suggestions.filter(skill => skill.startsWith(value)))
+            setIsFirstInput(false);
         }
     };
 
@@ -50,8 +66,9 @@ function FormProfile(props) {
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-        console.log("I am pressing enter key")
-        axios.post('http://localhost:3000/api/v1/saveSkill', { value: inputValue })
+            console.log("I am pressing enter key")
+            // axios.post('http://localhost:3000/api/v1/saveSkill', { value: inputValue })
+            
         .then(response => {
             console.log('Saved successfully to skills!');
         })
