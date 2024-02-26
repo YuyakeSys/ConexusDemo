@@ -10,7 +10,7 @@ module Api
       private
 
       def get_suggestions(keyword)
-        skills = Skill.where("skill_name LIKE ?", "%#{keyword}%")
+        skills = Skill.where("skill_name LIKE ?", "#{keyword}%")
         skill_names = skills.map(&:skill_name)
         return skill_names
       end      
