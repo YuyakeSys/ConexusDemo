@@ -8,13 +8,13 @@ function FormProfile(props) {
     const [inputValue, setInputValue] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [isFirstInput, setIsFirstInput] = useState(false);
+    const [showList, setShowList] = useState(false);
 
     useEffect(() => {
         const fetchData = async(value) => {
             try{
                 const skill_list = await axios.get(`http://localhost:3000/api/v1/suggestions?query=${value}`);
                 setSuggestions(skill_list.data);
-                console.log(suggestions)
             } catch (error) {
                 console.error("No response:", error);
             }
@@ -31,12 +31,15 @@ function FormProfile(props) {
 
         if (value.length === 1) {
             setIsFirstInput(true);
+            setShowList(true);
         } else if (value === '') {
             setSuggestions([])
             setIsFirstInput(false);
+            setShowList(false);
         } else {
             setSuggestions(suggestions.filter(skill => skill.startsWith(value)))
             setIsFirstInput(false);
+            setShowList(true);
         }
     };
 
@@ -49,19 +52,20 @@ function FormProfile(props) {
         const userCookie = cookieArray.find(cookie => cookie.startsWith('user='));
 
         if (userCookie) {
-        const userID = JSON.parse(userCookie.split('=')[1]).id;
-        axios.post('http://localhost:3000/api/v1/saveUserSkill', { value: suggestion, user_id: userID })
-        .then(response => {
-            console.log('Saved successfully to user_skills!');
-        })
-        .catch(error => {
-            console.error('Failed to save to user_skills:', error);
-        });
+            const userID = JSON.parse(userCookie.split('=')[1]).id;
+            axios.post('http://localhost:3000/api/v1/saveUserSkill', { value: suggestion, user_id: userID })
+            .then(response => {
+                console.log('Saved successfully to user_skills!');
+            })
+            .catch(error => {
+                console.error('Failed to save to user_skills:', error);
+            });
         } else {
-        console.log('ERROR ERROR ERROR: no user_id founded!');
+            console.log('ERROR ERROR ERROR: no user_id founded!');
         }
 
         setSuggestions([]);
+        setShowList(false);
     };
 
     const handleKeyDown = (event) => {
@@ -132,22 +136,26 @@ function FormProfile(props) {
                         value={inputValue} 
                         onChange={handleChange} 
                         onKeyDown={handleKeyDown} 
+                        // onBlur={() => setShowList(false)} 
                     />
                 </div>
             </div>
             <div className="form-group row">
                 <label className="col-sm-2 col-form-label" htmlFor="skills"></label>
                 <div className="col-sm-10">
-                    {suggestions.map((suggestion, index) => (
-                    <a className="dropdown-item" key={index} onClick={() => handleSelect(suggestion)}>
-                    {suggestion}
-                    </a>
-                    ))}
+                    {showList && (
+                        <ul className="form-control" >
+                            {suggestions.map((suggestion, index) => (
+                                <li className="py-2 pl-4 pr-9 truncate text-navy1" 
+                                    key={index} 
+                                    onClick={() => handleSelect(suggestion)}>
+                                    {suggestion}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
             </div>
-            {/* <div>
-                <button className="btn btn-primary">Save</button>
-            </div> */}
         </form>
     );
 }
