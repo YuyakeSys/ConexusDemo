@@ -18,8 +18,10 @@ export default function Signup() {
     companyStatus: "",
     consultantLocation: "",
     entrepreneurMission: "",
+    status: "",
+    mission: "",
+    teamMember: [], // Now array for multiple ids
     userType: "",
-    
   });
   const [error, setError] = useState("");
   const router = useRouter();
@@ -29,9 +31,39 @@ export default function Signup() {
     setUserDetails({ ...userDetails, [name]: value });
   };
 
+  const handleUserSelect = (selectedUserId) => {
+    // Prevent adding duplicate user IDs
+    if (!userDetails.teamMember.includes(selectedUserId)) {
+      console.log(userDetails.teamMember);
+      console.log("selecting users");
+      console.log("user:" + selectedUserId);
+      setUserDetails((prevDetails) => ({
+        ...prevDetails,
+        teamMember: [...prevDetails.teamMember, selectedUserId],
+      }));
+    }
+  };
+
+  const removeUserSelect = (selectedUserId) => {
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      teamMember: prevDetails.teamMember.filter((id) => id !== selectedUserId),
+    }));
+  };
+
   const handleSignUpUser = async () => {
-    const { email, password, repeatPassword, fullName, education, userType } =
-      userDetails;
+    const {
+      email,
+      password,
+      repeatPassword,
+      fullName,
+      education,
+      status,
+      mission,
+      teamMember,
+      privacy,
+      userType,
+    } = userDetails;
     if (password != repeatPassword) {
       alert("Not the same password");
       return;
@@ -43,6 +75,10 @@ export default function Signup() {
         password,
         fullName,
         education,
+        status,
+        mission,
+        JSON.stringify(teamMember),
+        privacy,
         userType
       );
       // Handle successful login, e.g., store tokens in local storage
@@ -141,6 +177,7 @@ export default function Signup() {
                     userType={userDetails.userType}
                     userDetails={userDetails}
                     handleChange={handleChange}
+                    handleUserSelect={handleUserSelect}
                   />
                   <button
                     className="btn btn-primary"

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import ConsultantProfile from "./consultantProfile";
 import FromProfile from "../../components/form_profile";
+import EntrepreneurProfile from "./entrepreneurProfile";
 
 const UserProfile = ({ params }) => {
   const [user, setUser] = useState(null);
@@ -75,7 +76,7 @@ const UserProfile = ({ params }) => {
     switch (user.user_type) {
       case "consultant":
         return <ConsultantProfile user={user} />;
-      case "entrepreneur":
+      case "company":
         return <EntrepreneurProfile user={user} />;
       default:
         return <div>Invalid user type</div>;

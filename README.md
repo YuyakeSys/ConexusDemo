@@ -84,3 +84,6 @@ Please read [CONTRIBUTING.md](#) for details on our code of conduct, and the pro
 - Hat tip to anyone whose code was used
 - Inspiration
 - etc.
+
+### font awesome
+npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome

@@ -31,6 +31,18 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def suggestions
+    if params[:name].present?
+      # Basic matching, consider using ILIKE for case-insensitive matching in PostgreSQL
+      users = User.where("fullname LIKE ?", "%#{params[:name]}%").limit(15)
+    else
+      users = User.none
+    end
+
+    render json: users, only: [:id, :fullname]
+  end
+
+
   def user_params
     # This allows the :fullname and :education attributes to be modified through the update action
     params.require(:user).permit(:fullname, :education)

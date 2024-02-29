@@ -108,6 +108,30 @@ a {
     color-scheme: dark;
   }
 }
+/* 
+for member suggestions */
+.selected-users {
+  margin-bottom: 10px;
+}
+
+.selected-user {
+  display: inline-block;
+  background-color: #e9ecef;
+  padding: 0.375rem 0.75rem;
+  margin-right: 5px;
+  border-radius: 0.25rem;
+}
+
+.list-group-item-action:hover {
+  background-color: #f8f9fa; /* Bootstrap hover color, change if needed */
+}
+
+.list-group-item.disabled,
+.list-group-item.disabled:hover {
+  color: #6c757d;
+  background-color: #fff;
+  cursor: not-allowed;
+}
 
 /* add bootstrap*/
 @import "bootstrap/dist/css/bootstrap.min.css";
