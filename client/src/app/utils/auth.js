@@ -2,7 +2,7 @@
 import axios from "axios";
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
 
-const API_BASE_URL = "http://127.0.0.1:3000"; // Replace with your API URL
+const API_BASE_URL = "http://127.0.0.1:3000";
 
 export const loginUser = async (email, password, rememberMe, req, res) => {
   try {
@@ -47,6 +47,10 @@ export const signUpUser = async (
   password,
   fullname,
   education,
+  status,
+  mission,
+  team_member,
+  privacy,
   user_type,
   req,
   res
@@ -57,6 +61,10 @@ export const signUpUser = async (
       password,
       fullname,
       education,
+      status,
+      mission,
+      team_member,
+      privacy,
       user_type,
     });
     console.log("sign up response", response);

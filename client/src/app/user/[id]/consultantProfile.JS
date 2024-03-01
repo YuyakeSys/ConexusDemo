@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 const ConsultantProfile = ({ user }) => {
   // Assuming you might have consultant-specific functionalities, you can add them here
   const router = useRouter();
 
   const handleClick = () => {
-    console.log(`/user/${user.id}/edit_profile_form`)
+    console.log(`/user/${user.id}/edit_profile_form`);
     router.push(`/user/${user.id}/edit_profile_form`);
   };
 
@@ -30,6 +30,23 @@ const ConsultantProfile = ({ user }) => {
           <h1>{user.fullname || "Consultant Name"}</h1>
           <p>{user.education || "Consultant's Education Details"}</p>
           {/* Add or modify sections here for consultant-specific data */}
+          {user.skills && user.skills.length > 0 ? (
+            <div className="mb-3">
+              <h5>Skills</h5>
+              <div className="d-flex flex-wrap">
+                {user.skills.map((skill, index) => (
+                  <span key={index} className="badge bg-primary me-2 mb-2">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="mb-3">
+              <h5>Skills</h5>
+              <p className="text-muted">No skills listed</p>
+            </div>
+          )}
           <div className="progress">
             <div
               className="progress-bar"
@@ -42,8 +59,6 @@ const ConsultantProfile = ({ user }) => {
               Profile 88% complete
             </div>
           </div>
-          {/* You can add or adjust buttons and actions specific to consultants */}
-          <button className="btn btn-primary mt-3" onClick={handleClick}>Edit</button>
         </div>
       </div>
       {/* Any additional sections or functionalities specific to consultants can be added here */}

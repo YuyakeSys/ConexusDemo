@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import ConsultantProfile from "./consultantProfile";
+import FromProfile from "../../components/form_profile";
+import EntrepreneurProfile from "./entrepreneurProfile";
 
 const UserProfile = ({ params }) => {
   const [user, setUser] = useState(null);
@@ -74,7 +76,7 @@ const UserProfile = ({ params }) => {
     switch (user.user_type) {
       case "consultant":
         return <ConsultantProfile user={user} />;
-      case "entrepreneur":
+      case "company":
         return <EntrepreneurProfile user={user} />;
       default:
         return <div>Invalid user type</div>;
@@ -86,6 +88,9 @@ const UserProfile = ({ params }) => {
   return (
     <div className="container py-5">
       {renderProfileByType()}
+      <button className="btn btn-primary mt-3" onClick={handleEditClick}>
+        Edit
+      </button>
       {/* Edit Modal */}
       {showEditModal && (
         <div
@@ -118,6 +123,7 @@ const UserProfile = ({ params }) => {
                       value={editFormData.fullname}
                       onChange={handleFormChange}
                     />
+                    <FromProfile />
                   </div>
 
                   {/* Conditional fields based on user type */}

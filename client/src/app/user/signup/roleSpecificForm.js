@@ -1,6 +1,12 @@
 import React from "react";
+import UserSuggestions from "./userSuggestions";
 
-function RoleSpecificForm({ userType, userDetails, handleChange }) {
+function RoleSpecificForm({
+  userType,
+  userDetails,
+  handleChange,
+  handleUserSelect,
+}) {
   return (
     <>
       {userType === "company" && (
@@ -12,7 +18,7 @@ function RoleSpecificForm({ userType, userDetails, handleChange }) {
             className="form-select"
             id="companyStatus"
             name="companyStatus"
-            value={userDetails.companyStatus || ""}
+            value={userDetails.Status || ""}
             onChange={handleChange}
           >
             <option value="">Select Company Status</option>
@@ -20,6 +26,11 @@ function RoleSpecificForm({ userType, userDetails, handleChange }) {
             <option value="Bootstrap">Bootstrap</option>
             <option value="Failed">Failed</option>
           </select>
+          <br />
+          <label htmlFor="company member" className="form-label">
+            Company members
+          </label>
+          <UserSuggestions handleUserSelect={handleUserSelect} />
         </div>
       )}
 
