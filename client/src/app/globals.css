@@ -114,6 +114,20 @@ for member suggestions */
   margin-bottom: 10px;
 }
 
+.remove-user-btn {
+  border: none; /* Removes the border */
+  background: none; /* Removes any background */
+  padding: 0; /* Resets padding */
+  outline: none; /* Removes the outline - often seen when the button is focused */
+}
+
+/* You might also want to add styles for when the button is clicked or in focus */
+.remove-user-btn:active,
+.remove-user-btn:focus {
+  outline: none;
+  border: none;
+}
+
 .selected-user {
   display: inline-block;
   background-color: #e9ecef;
