@@ -56,7 +56,7 @@ function UserSuggestions({ handleUserSelect, removeUserSelect }) {
       <div className="selected-users">
         {selectedUserDetails.map((user) => (
           <div key={user.id} className="selected-user">
-            {user.fullname} {/* Display user name */}
+            {user.full_name} {/* Display user name */}
             <button
               onClick={() => removeSelect(user.id)}
               className="remove-user-btn"
@@ -83,7 +83,7 @@ function UserSuggestions({ handleUserSelect, removeUserSelect }) {
               }`}
               onClick={() => selectUser(user)} // Pass the whole user object
             >
-              {user.fullname}
+              {user.full_name}
             </li>
           ))}
         </ul>

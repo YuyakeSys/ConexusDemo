@@ -147,5 +147,14 @@ for member suggestions */
   cursor: not-allowed;
 }
 
+.small-thumbnail {
+  width: 50px;
+  height: auto;
+}
+
+a:hover .user-name-tooltip {
+  display: block;
+}
+
 /* add bootstrap*/
 @import "bootstrap/dist/css/bootstrap.min.css";

@@ -20,14 +20,14 @@ const ConsultantProfile = ({ user }) => {
           <div className="text-center">
             <img
               src={user.image_url || "https://i.imgur.com/ZqBwLzL.jpeg"} // Use a default or specific image for consultants
-              alt={`${user.fullname || "Consultant"}'s Avatar`}
+              alt={`${user.full_name || "Consultant"}'s Avatar`}
               className="rounded-circle"
               style={{ width: "100px", height: "100px" }}
             />
           </div>
         </div>
         <div className="col-md-8">
-          <h1>{user.fullname || "Consultant Name"}</h1>
+          <h1>{user.full_name || "Consultant Name"}</h1>
           <p>{user.education || "Consultant's Education Details"}</p>
           {/* Add or modify sections here for consultant-specific data */}
           {user.skills && user.skills.length > 0 ? (

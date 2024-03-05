@@ -15,7 +15,11 @@ Rails.application.routes.draw do
       get '/member/suggestions', to: 'users#suggestions' 
       resources :posts
       resources :projects
-      resources :users
+      resources :users do
+        member do
+          get 'get_user_brief'
+        end
+      end
     end 
   end 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
