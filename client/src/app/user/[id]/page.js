@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import ConsultantProfile from "./consultantProfile";
-import FromProfile from "../../components/form_profile";
+import FormProfile from "../../components/form_profile";
 import EntrepreneurProfile from "./entrepreneurProfile";
 
 const UserProfile = ({ params }) => {
@@ -123,7 +123,7 @@ const UserProfile = ({ params }) => {
                       value={editFormData.fullname}
                       onChange={handleFormChange}
                     />
-                    <FromProfile />
+                    <FormProfile />
                   </div>
 
                   {/* Conditional fields based on user type */}
