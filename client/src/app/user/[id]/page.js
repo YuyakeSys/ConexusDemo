@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ConsultantProfile from "./consultantProfile";
 import FormProfile from "../../components/form_profile";
 import EntrepreneurProfile from "./entrepreneurProfile";
@@ -11,6 +11,7 @@ const UserProfile = ({ params }) => {
     fullname: "",
     education: "",
   });
+  let ChildRef = React.createRef();
 
   const fetchUser = async (id) => {
     try {
@@ -49,6 +50,8 @@ const UserProfile = ({ params }) => {
   };
 
   const handleConfirmClick = async () => {
+      ChildRef.current.userSkillUpdate();
+
     // API call to update user information
     const response = await fetch(
       `http://127.0.0.1:3000/api/v1/users/${params.id}`,
@@ -123,7 +126,7 @@ const UserProfile = ({ params }) => {
                       value={editFormData.fullname}
                       onChange={handleFormChange}
                     />
-                    <FormProfile />
+                    <FormProfile onRef={ChildRef} />
                   </div>
 
                   {/* Conditional fields based on user type */}

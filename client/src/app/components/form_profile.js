@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useImperativeHandle } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,12 @@ function FormProfile(props) {
     const [suggestions, setSuggestions] = useState([]);
     const [isFirstInput, setIsFirstInput] = useState(false);
     const [showList, setShowList] = useState(false);
+
+    useImperativeHandle(props.onRef, () => {
+        return {
+            userSkillUpdate: userSkillUpdate,
+        };
+      });
 
     useEffect(() => {
         const fetchData = async(value) => {
