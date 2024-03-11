@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons';
+
 
 function FormProfile(props) {
-    const nameInputRef = useRef();
-    const locationInputRef = useRef();
     const skillsInputRef = useRef();
     const [inputValue, setInputValue] = useState('');
+    const [selectedItem, setSelectedItem] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
     const [isFirstInput, setIsFirstInput] = useState(false);
     const [showList, setShowList] = useState(false);
@@ -44,86 +46,50 @@ function FormProfile(props) {
     };
 
     const handleSelect = (suggestion) => {
-        setInputValue(suggestion);
-
-        const allCookies = document.cookie;
-        const decodedCookies = decodeURIComponent(allCookies);
-        const cookieArray = decodedCookies.split(';').map(cookie => cookie.trim());
-        const userCookie = cookieArray.find(cookie => cookie.startsWith('user='));
-
-        if (userCookie) {
-            const userID = JSON.parse(userCookie.split('=')[1]).id;
-            axios.post('http://localhost:3000/api/v1/saveUserSkill', { value: suggestion, user_id: userID })
-            .then(response => {
-                console.log('Saved successfully to user_skills!');
-            })
-            .catch(error => {
-                console.error('Failed to save to user_skills:', error);
-            });
-        } else {
-            console.log('ERROR ERROR ERROR: no user_id founded!');
-        }
-
+        setInputValue('');
         setSuggestions([]);
         setShowList(false);
+
+        setSelectedItem(selectedItem => {
+            if (!selectedItem.includes(suggestion)) {
+                return [...selectedItem, suggestion];
+            }
+            return selectedItem;
+        });
     };
 
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            console.log("I am pressing enter key")
-            // axios.post('http://localhost:3000/api/v1/saveSkill', { value: inputValue })
-            
-        .then(response => {
-            console.log('Saved successfully to skills!');
-        })
-        .catch(error => {
-            console.error('Failed to save to skills:', error);
+    const handleDelete = (deletedItem) => {
+        console.log(`before selectitem: ${selectedItem}`);
+        setSelectedItem(prevSelectedItem => {
+            const updatedSelectedItem = selectedItem.filter(selectedItem => selectedItem !== deletedItem);
+            console.log(`after selectitem: ${updatedSelectedItem}`);
+            return updatedSelectedItem;
         });
-
-        const allCookies = document.cookie;
-        const decodedCookies = decodeURIComponent(allCookies);
-        const cookieArray = decodedCookies.split(';').map(cookie => cookie.trim());
-        const userCookie = cookieArray.find(cookie => cookie.startsWith('user='));
-
-        const userID = JSON.parse(userCookie.split('=')[1]).id;
-        axios.post('http://localhost:3000/api/v1/saveUserSkill', { value: inputValue, user_id: userID })
-        .then(response => {
-            console.log('Saved successfully to user_skills!');
-        })
-        .catch(error => {
-            console.error('Failed to save to user_skills:', error);
-        });
-        }
     };
-    
-    function submitHandler(event) {
-        event.preventDefault();
-        const enteredName = nameInputRef.current.value;
-        const enteredLocation = locationInputRef.current.value;
-        const enteredSkills = skillsInputRef.current.value;
 
-        const profileData = {
-            name: enteredName,
-            location: enteredLocation,
-            location: enteredSkills,
-        };
+    function userSkillUpdate(prevProbs) {
+            console.log("confirmed!")
+            const allCookies = document.cookie;
+            const decodedCookies = decodeURIComponent(allCookies);
+            const cookieArray = decodedCookies.split(';').map(cookie => cookie.trim());
+            const userCookie = cookieArray.find(cookie => cookie.startsWith('user='));
 
-        props.onEditProfile(profileData);
+            if (userCookie) {
+                const userID = JSON.parse(userCookie.split('=')[1]).id;
+                axios.post('http://localhost:3000/api/v1/saveUserSkill', { user_id: userID, skills: selectedItem })
+                .then(response => {
+                    console.log('Saved successfully to user_skills!');
+                })
+                .catch(error => {
+                    console.error('Failed to save to user_skills:', error);
+                });
+            } else {
+                console.log('Error: no user_id founded!');
+            }
     }
+    
     return (
-        <form onSubmit={submitHandler}>
-            <div className="form-group row">
-                <label className="col-sm-2 col-form-label" htmlFor="name">Name</label>
-                <div className="col-sm-10">
-                    <input className="form-control" type="text" required id="name" ref={nameInputRef} />
-                </div>
-            </div>
-            <div className="form-group row">
-                <label className="col-sm-2 col-form-label" htmlFor="location">Location</label>
-                <div className="col-sm-10">
-                    <input className="form-control" type="text" required id="location" ref={locationInputRef} />
-                </div>
-            </div>
+        <form>
             <div className="form-group row">
                 <label className="col-sm-2 col-form-label" htmlFor="skills">Skills</label>
                 <div className="col-sm-10">
@@ -134,24 +100,43 @@ function FormProfile(props) {
                         id="skills" 
                         ref={skillsInputRef}
                         value={inputValue} 
-                        onChange={handleChange} 
-                        onKeyDown={handleKeyDown} 
+                        onChange={handleChange}
+                        // onKeyDown={handleKeyDown} 
                         // onBlur={() => setShowList(false)} 
                     />
                 </div>
             </div>
+
+            <div className="form-group row">
+                {selectedItem.map((label, index) => (
+                    <div className="col" style={{ flex: '0 0 30%' }} key={index} >
+                        <span>{label}</span>
+                        <button onClick={() => handleDelete(label)} 
+                                style={{background: 'none', border: 'none', padding: 2, cursor: 'pointer', width: '30px'}}>
+                            <FontAwesomeIcon icon={faDeleteLeft} />
+                          </button>
+                    </div>
+                ))}
+            </div>
+
             <div className="form-group row">
                 <label className="col-sm-2 col-form-label" htmlFor="skills"></label>
                 <div className="col-sm-10">
                     {showList && (
                         <ul className="form-control" >
-                            {suggestions.map((suggestion, index) => (
-                                <li className="py-2 pl-4 pr-9 truncate text-navy1" 
-                                    key={index} 
-                                    onClick={() => handleSelect(suggestion)}>
-                                    {suggestion}
-                                </li>
-                            ))}
+                        <li className="py-2 pl-2 pr-2" 
+                                style={{ listStyleType: 'none' }}
+                                onClick={() => handleSelect(inputValue)}>
+                                {inputValue}
+                        </li>
+                        {suggestions.map((suggestion, index) => (
+                            <li className="py-2 pl-2 pr-2" 
+                                style={{ listStyleType: 'none' }}
+                                key={index} 
+                                onClick={() => handleSelect(suggestion)}>
+                                {suggestion}
+                            </li>
+                        ))}
                         </ul>
                     )}
                 </div>
