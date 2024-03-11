@@ -89,7 +89,7 @@ function FormProfile(props) {
     }
     
     return (
-        <form>
+        <div>
             <div className="form-group row">
                 <label className="col-sm-2 col-form-label" htmlFor="skills">Skills</label>
                 <div className="col-sm-10">
@@ -141,7 +141,7 @@ function FormProfile(props) {
                     )}
                 </div>
             </div>
-        </form>
+        </div>
     );
 }
 
