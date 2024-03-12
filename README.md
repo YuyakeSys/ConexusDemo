@@ -86,4 +86,9 @@ Please read [CONTRIBUTING.md](#) for details on our code of conduct, and the pro
 - etc.
 
 ### font awesome
+
 npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
+
+### react select
+
+npm i --save react-select

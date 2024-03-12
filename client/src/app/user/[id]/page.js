@@ -82,6 +82,8 @@ const UserProfile = ({ params }) => {
         return <ConsultantProfile user={user} />;
       case "company":
         return <CompanyProfile user={user} />;
+      case "entrepreneur":
+        return <EntrepreneurProfile user={user} />;
       default:
         return <div>Invalid user type</div>;
     }

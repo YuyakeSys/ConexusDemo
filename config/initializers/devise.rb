@@ -319,6 +319,9 @@ Devise.setup do |config|
     :mission, 
     :team_member, 
     :privacy,
-    :user_type,]
+    :user_type,
+    :belong_to_ids,
+    :industry,
+  ]
   end
 end

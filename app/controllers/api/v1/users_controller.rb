@@ -33,16 +33,19 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def suggestions
-    if params[:name].present?
-      # Basic matching, consider using ILIKE for case-insensitive matching in PostgreSQL
-      users = User.where("full_name LIKE ?", "%#{params[:name]}%").limit(15)
-    else
-      users = User.none
-    end
+  users = User.all
 
-    render json: users, only: [:id, :full_name]
+  if params[:name].present?
+    users = users.where("full_name LIKE ?", "%#{params[:name]}%")
   end
 
+  if params[:user_type].present?
+    users = users.where(user_type: params[:user_type])
+  end
+
+  users = users.limit(15)
+  render json: users, only: [:id, :full_name]
+end
   def get_user_brief
     user = User.select(:id, :full_name, :image_url).find_by(id: params[:id])
 

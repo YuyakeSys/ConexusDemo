@@ -52,6 +52,8 @@ export const signUpUser = async (
   team_member,
   privacy,
   user_type,
+  belong_to_ids,
+  industry,
   req,
   res
 ) => {
@@ -66,6 +68,8 @@ export const signUpUser = async (
       team_member,
       privacy,
       user_type,
+      belong_to_ids,
+      industry,
     });
     console.log("sign up response", response);
     const { token, refresh_token, resource_owner } = response.data;

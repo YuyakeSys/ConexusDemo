@@ -6,50 +6,58 @@ import { useRouter } from "next/navigation";
 import FormField from "./formField";
 import RoleSpecificForm from "./roleSpecificForm";
 import { AuthContext } from "@/app/utils/authContext";
+import useUserDetails from "./useUserDetails";
 
 export default function Signup() {
   const { setUser } = useContext(AuthContext);
-  const [userDetails, setUserDetails] = useState({
-    email: "",
-    password: "",
-    repeatPassword: "",
-    fullName: "",
-    education: "",
-    companyStatus: "",
-    consultantLocation: "",
-    entrepreneurMission: "",
-    status: "",
-    mission: "",
-    teamMember: [], // Now array for multiple ids
-    userType: "",
-  });
+  const {
+    userDetails,
+    handleChange,
+    handleUserSelect,
+    removeUserSelect,
+    setUserDetails,
+  } = useUserDetails();
+  // const [userDetails, setUserDetails] = useState({
+  //   email: "",
+  //   password: "",
+  //   repeatPassword: "",
+  //   fullName: "",
+  //   education: "",
+  //   companyStatus: "",
+  //   consultantLocation: "",
+  //   entrepreneurMission: "",
+  //   status: "",
+  //   mission: "",
+  //   teamMember: [], // Now array for multiple ids
+  //   userType: "",
+  // });
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserDetails({ ...userDetails, [name]: value });
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setUserDetails({ ...userDetails, [name]: value });
+  // };
 
-  const handleUserSelect = (selectedUserId) => {
-    // Prevent adding duplicate user IDs
-    if (!userDetails.teamMember.includes(selectedUserId)) {
-      console.log(userDetails.teamMember);
-      console.log("selecting users");
-      console.log("user:" + selectedUserId);
-      setUserDetails((prevDetails) => ({
-        ...prevDetails,
-        teamMember: [...prevDetails.teamMember, selectedUserId],
-      }));
-    }
-  };
+  // const handleUserSelect = (selectedUserId) => {
+  //   // Prevent adding duplicate user IDs
+  //   if (!userDetails.teamMember.includes(selectedUserId)) {
+  //     console.log(userDetails.teamMember);
+  //     console.log("selecting users");
+  //     console.log("user:" + selectedUserId);
+  //     setUserDetails((prevDetails) => ({
+  //       ...prevDetails,
+  //       teamMember: [...prevDetails.teamMember, selectedUserId],
+  //     }));
+  //   }
+  // };
 
-  const removeUserSelect = (selectedUserId) => {
-    setUserDetails((prevDetails) => ({
-      ...prevDetails,
-      teamMember: prevDetails.teamMember.filter((id) => id !== selectedUserId),
-    }));
-  };
+  // const removeUserSelect = (selectedUserId) => {
+  //   setUserDetails((prevDetails) => ({
+  //     ...prevDetails,
+  //     teamMember: prevDetails.teamMember.filter((id) => id !== selectedUserId),
+  //   }));
+  // };
 
   const handleSignUpUser = async () => {
     const {
@@ -63,6 +71,8 @@ export default function Signup() {
       teamMember,
       privacy,
       userType,
+      belong_to_ids,
+      industry,
     } = userDetails;
     if (password != repeatPassword) {
       alert("Not the same password");
@@ -79,7 +89,9 @@ export default function Signup() {
         mission,
         JSON.stringify(teamMember),
         privacy,
-        userType
+        userType,
+        belong_to_ids,
+        JSON.stringify(industry)
       );
       // Handle successful login, e.g., store tokens in local storage
       setUser(response);
@@ -165,13 +177,6 @@ export default function Signup() {
                         onChange={handleChange}
                       />
                     </div>
-                    <FormField
-                      label="Education"
-                      name="education"
-                      type="text"
-                      value={userDetails.education}
-                      onChange={handleChange}
-                    />
                   </div>
                   <RoleSpecificForm
                     userType={userDetails.userType}
