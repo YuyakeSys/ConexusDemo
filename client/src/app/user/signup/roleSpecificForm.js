@@ -6,6 +6,7 @@ function RoleSpecificForm({
   userDetails,
   handleChange,
   handleUserSelect,
+  removeUserSelect,
 }) {
   return (
     <>
@@ -30,7 +31,7 @@ function RoleSpecificForm({
           <label htmlFor="company member" className="form-label">
             Company members
           </label>
-          <UserSuggestions handleUserSelect={handleUserSelect} />
+          <UserSuggestions handleUserSelect={handleUserSelect} removeUserSelect={removeUserSelect}/>
         </div>
       )}
 

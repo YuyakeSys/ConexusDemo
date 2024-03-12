@@ -2,9 +2,9 @@
 import { API_URLS } from "@/app/utils/constant";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
 
-function UserSuggestions({ handleUserSelect, selectedUserIds }) {
+function UserSuggestions({ handleUserSelect, removeUserSelect }) {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -31,6 +31,14 @@ function UserSuggestions({ handleUserSelect, selectedUserIds }) {
     }
   };
 
+  const removeSelect = (userId) => {
+    removeUserSelect(userId);
+    // remove from selectedUserDetails
+    setSelectedUserDetails(
+      selectedUserDetails.filter((user) => user.id !== userId)
+    );
+  };
+
   //if user id is selected
   const isUserSelected = (userId) => {
     return selectedUserDetails.some((user) => user.id === userId);
@@ -48,7 +56,13 @@ function UserSuggestions({ handleUserSelect, selectedUserIds }) {
       <div className="selected-users">
         {selectedUserDetails.map((user) => (
           <div key={user.id} className="selected-user">
-            {user.fullname} {/* Display the user's name */}
+            {user.full_name} {/* Display user name */}
+            <button
+              onClick={() => removeSelect(user.id)}
+              className="remove-user-btn"
+            >
+              <FontAwesomeIcon icon={faDeleteLeft} />
+            </button>
           </div>
         ))}
       </div>
@@ -69,7 +83,7 @@ function UserSuggestions({ handleUserSelect, selectedUserIds }) {
               }`}
               onClick={() => selectUser(user)} // Pass the whole user object
             >
-              {user.fullname}
+              {user.full_name}
             </li>
           ))}
         </ul>

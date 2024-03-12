@@ -45,7 +45,7 @@ export const loginUser = async (email, password, rememberMe, req, res) => {
 export const signUpUser = async (
   email,
   password,
-  fullname,
+  full_name,
   education,
   status,
   mission,
@@ -59,7 +59,7 @@ export const signUpUser = async (
     const response = await axios.post(`${API_BASE_URL}/users/tokens/sign_up`, {
       email,
       password,
-      fullname,
+      full_name,
       education,
       status,
       mission,

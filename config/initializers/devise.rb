@@ -313,7 +313,7 @@ Devise.setup do |config|
   config.api.configure do |api|
     # Sign up
     api.sign_up.enabled = true
-    api.sign_up.extra_fields = [:fullname, 
+    api.sign_up.extra_fields = [:full_name, 
     :education, 
     :status, 
     :mission, 

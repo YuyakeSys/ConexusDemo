@@ -1,14 +1,17 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import ConsultantProfile from "./consultantProfile";
 import FormProfile from "../../components/form_profile";
 import EntrepreneurProfile from "./entrepreneurProfile";
+import CompanyProfile from "./companyProfile";
+import { AuthContext } from "@/app/utils/authContext";
 
 const UserProfile = ({ params }) => {
   const [user, setUser] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const { user: currentUser } = useContext(AuthContext);
   const [editFormData, setEditFormData] = useState({
-    fullname: "",
+    full_name: "",
     education: "",
   });
   let ChildRef = React.createRef();
@@ -21,8 +24,9 @@ const UserProfile = ({ params }) => {
       }
       const data = await response.json();
       setUser(data);
+      console.log(data);
       // Initialize edit form data with user data
-      setEditFormData({ fullname: data.fullname, education: data.education });
+      setEditFormData({ full_name: data.full_name, education: data.education });
     } catch (error) {
       console.error("Error fetching user:", error);
     }
@@ -80,7 +84,7 @@ const UserProfile = ({ params }) => {
       case "consultant":
         return <ConsultantProfile user={user} />;
       case "company":
-        return <EntrepreneurProfile user={user} />;
+        return <CompanyProfile user={user} />;
       default:
         return <div>Invalid user type</div>;
     }
@@ -91,9 +95,11 @@ const UserProfile = ({ params }) => {
   return (
     <div className="container py-5">
       {renderProfileByType()}
-      <button className="btn btn-primary mt-3" onClick={handleEditClick}>
-        Edit
-      </button>
+      {currentUser && String(currentUser.id) === String(params.id) && (
+        <button className="btn btn-primary mt-3" onClick={handleEditClick}>
+          Edit
+        </button>
+      )}
       {/* Edit Modal */}
       {showEditModal && (
         <div
@@ -115,15 +121,15 @@ const UserProfile = ({ params }) => {
                 <form>
                   {/* Common field */}
                   <div className="mb-3">
-                    <label htmlFor="fullname" className="form-label">
+                    <label htmlFor="full_name" className="form-label">
                       Full Name
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      id="fullname"
-                      name="fullname"
-                      value={editFormData.fullname}
+                      id="full_name"
+                      name="full_name"
+                      value={editFormData.full_name}
                       onChange={handleFormChange}
                     />
                     <FormProfile onRef={ChildRef} />

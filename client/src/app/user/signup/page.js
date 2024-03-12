@@ -178,6 +178,7 @@ export default function Signup() {
                     userDetails={userDetails}
                     handleChange={handleChange}
                     handleUserSelect={handleUserSelect}
+                    removeUserSelect={removeUserSelect}
                   />
                   <button
                     className="btn btn-primary"
