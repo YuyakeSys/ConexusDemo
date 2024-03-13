@@ -92,6 +92,6 @@ npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg
 
 ### react commands
 
-npm i --save react-select
-npm install react-dropzone
-npm install react-icons
+- npm i --save react-select
+- npm install react-dropzone
+- npm install react-icons
