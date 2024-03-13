@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :api
   has_many :user_skills, foreign_key: 'users_id'
   has_many :skills, through: :user_skills
+
+  has_one_attached :avatar
 end

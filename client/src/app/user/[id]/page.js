@@ -5,6 +5,7 @@ import FormProfile from "../../components/form_profile";
 import EntrepreneurProfile from "./entrepreneurProfile";
 import CompanyProfile from "./companyProfile";
 import { AuthContext } from "@/app/utils/authContext";
+import { API_URLS } from "@/app/utils/constant";
 
 const UserProfile = ({ params }) => {
   const [user, setUser] = useState(null);
@@ -18,7 +19,7 @@ const UserProfile = ({ params }) => {
 
   const fetchUser = async (id) => {
     try {
-      const response = await fetch(`http://127.0.0.1:3000/api/v1/users/${id}`);
+      const response = await fetch(`${API_URLS.BASIC_URL}/users/${id}`);
       if (!response.ok) {
         throw new Error("Failed to fetch user");
       }
@@ -54,7 +55,7 @@ const UserProfile = ({ params }) => {
   };
 
   const handleConfirmClick = async () => {
-      ChildRef.current.userSkillUpdate();
+    ChildRef.current.userSkillUpdate();
 
     // API call to update user information
     const response = await fetch(

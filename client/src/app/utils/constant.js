@@ -7,6 +7,7 @@ export const USER_TYPES = {
 
 export const API_URLS = {
   BASIC_URL: "http://127.0.0.1:3000/api/v1/",
+  SERVER_URL: "http://127.0.0.1:3000",
 };
 
 export const INDUSTRY_AREAS = [
@@ -27,4 +28,10 @@ export const INDUSTRY_AREAS = [
   { value: "legal", label: "Legal" },
   { value: "tourism", label: "Tourism" },
   { value: "food_service", label: "Food Service" },
+];
+
+export const COMPANY_STATUS_OPTIONS = [
+  { value: "Preparing", label: "Preparing" },
+  { value: "Bootstrap", label: "Bootstrap" },
+  { value: "Failed", label: "Failed" },
 ];

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :users do
         member do
           get 'get_user_brief'
+          put :update_avatar
         end
       end
     end 

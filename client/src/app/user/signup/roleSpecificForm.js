@@ -1,6 +1,10 @@
 import React from "react";
 import UserSuggestions from "@/app/utils/userSuggestions";
-import { USER_TYPES, INDUSTRY_AREAS } from "@/app/utils/constant";
+import {
+  USER_TYPES,
+  INDUSTRY_AREAS,
+  COMPANY_STATUS_OPTIONS,
+} from "@/app/utils/constant";
 import FormField from "./formField";
 import Select from "react-select";
 
@@ -11,16 +15,27 @@ function RoleSpecificForm({
   handleUserSelect,
   removeUserSelect,
 }) {
-  const handleSelectChange = (selectedOption) => {
+  const handleSelectChange = (selectedOption, fieldName) => {
     // Assuming you want to store the values in the form of an array of keys
     handleChange({
       target: {
-        name: "industry",
+        name: fieldName,
         value: selectedOption
           ? selectedOption.map((option) => option.value)
           : [],
       },
     });
+  };
+
+  const handleSingleSelectedChange = (selectedOption, fieldName) => {
+    // Create a faux event object
+    const event = {
+      target: {
+        name: fieldName,
+        value: selectedOption ? selectedOption.value : "",
+      },
+    };
+    handleChange(event);
   };
 
   const selectedValue = userDetails.industry
@@ -29,6 +44,11 @@ function RoleSpecificForm({
       )
     : [];
 
+  const selectedStatusOption =
+    COMPANY_STATUS_OPTIONS.find(
+      (option) => option.value === userDetails.status
+    ) || null;
+
   return (
     <>
       {userType === "company" && (
@@ -36,20 +56,18 @@ function RoleSpecificForm({
           <label htmlFor="companyStatus" className="form-label">
             Company Status
           </label>
-          <select
-            className="form-select"
+          <Select
             id="companyStatus"
-            name="companyStatus"
-            value={userDetails.Status || ""}
-            onChange={handleChange}
-          >
-            <option value="">Select Company Status</option>
-            <option value="Preparing">Preparing</option>
-            <option value="Bootstrap">Bootstrap</option>
-            <option value="Failed">Failed</option>
-          </select>
-          <br />
-          <label htmlFor="company member" className="form-label">
+            name="status"
+            value={selectedStatusOption}
+            onChange={(option) => handleSingleSelectedChange(option, "status")} // Passing the field name here
+            options={COMPANY_STATUS_OPTIONS}
+            className="basic-single"
+            classNamePrefix="select"
+            isClearable={true} // Allows clearing the selected value
+            placeholder="Select Company Status"
+          />
+          <label htmlFor="company member" className="form-label mt-3">
             Company members
           </label>
           <UserSuggestions
@@ -136,7 +154,7 @@ function RoleSpecificForm({
                 options={INDUSTRY_AREAS}
                 className="basic-multi-select"
                 classNamePrefix="select"
-                onChange={handleSelectChange}
+                onChange={(option) => handleSelectChange(option, "industry")}
                 value={selectedValue}
               />
             </div>

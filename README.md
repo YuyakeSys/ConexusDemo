@@ -35,6 +35,7 @@ A step by step series of examples that tell you how to get a development environ
    - Migrate the database to create the necessary tables:
 
      ```bash
+     rails active_storage:install
      rails db:migrate
      ```
 
@@ -89,6 +90,8 @@ Please read [CONTRIBUTING.md](#) for details on our code of conduct, and the pro
 
 npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
 
-### react select
+### react commands
 
 npm i --save react-select
+npm install react-dropzone
+npm install react-icons

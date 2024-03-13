@@ -18,46 +18,8 @@ export default function Signup() {
     setUserDetails,
   } = useUserDetails();
   // const [userDetails, setUserDetails] = useState({
-  //   email: "",
-  //   password: "",
-  //   repeatPassword: "",
-  //   fullName: "",
-  //   education: "",
-  //   companyStatus: "",
-  //   consultantLocation: "",
-  //   entrepreneurMission: "",
-  //   status: "",
-  //   mission: "",
-  //   teamMember: [], // Now array for multiple ids
-  //   userType: "",
-  // });
   const [error, setError] = useState("");
   const router = useRouter();
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setUserDetails({ ...userDetails, [name]: value });
-  // };
-
-  // const handleUserSelect = (selectedUserId) => {
-  //   // Prevent adding duplicate user IDs
-  //   if (!userDetails.teamMember.includes(selectedUserId)) {
-  //     console.log(userDetails.teamMember);
-  //     console.log("selecting users");
-  //     console.log("user:" + selectedUserId);
-  //     setUserDetails((prevDetails) => ({
-  //       ...prevDetails,
-  //       teamMember: [...prevDetails.teamMember, selectedUserId],
-  //     }));
-  //   }
-  // };
-
-  // const removeUserSelect = (selectedUserId) => {
-  //   setUserDetails((prevDetails) => ({
-  //     ...prevDetails,
-  //     teamMember: prevDetails.teamMember.filter((id) => id !== selectedUserId),
-  //   }));
-  // };
 
   const handleSignUpUser = async () => {
     const {

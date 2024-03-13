@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import { Avatar } from "../component/Avatar";
 
 const ConsultantProfile = ({ user }) => {
   // Assuming you might have consultant-specific functionalities, you can add them here
@@ -17,14 +18,7 @@ const ConsultantProfile = ({ user }) => {
       <p> Consultant page</p>
       <div className="row">
         <div className="col-md-4">
-          <div className="text-center">
-            <img
-              src={user.image_url || "https://i.imgur.com/ZqBwLzL.jpeg"} // Use a default or specific image for consultants
-              alt={`${user.full_name || "Consultant"}'s Avatar`}
-              className="rounded-circle"
-              style={{ width: "100px", height: "100px" }}
-            />
-          </div>
+          <Avatar user={user} />
         </div>
         <div className="col-md-8">
           <h1>{user.full_name || "Consultant Name"}</h1>
