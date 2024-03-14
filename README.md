@@ -79,6 +79,7 @@ Please read [CONTRIBUTING.md](#) for details on our code of conduct, and the pro
 ### Authors
 
 - **Zhouyang Meng** - _Initial work_ - [Chester](https://github.com/YuyakeSys)
+- **Ning An** - [Github](https://github.com/Annedrew)
 
 ### Acknowledgments
 
