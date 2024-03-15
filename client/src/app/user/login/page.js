@@ -3,6 +3,7 @@ import { loginUser } from "../../utils/auth";
 import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AuthContext } from "@/app/utils/authContext";
+import { signIn } from "next-auth/react";
 
 export default function Login() {
   const router = useRouter();
@@ -85,13 +86,23 @@ export default function Login() {
                 </label>
               </div>
               <br />
-              <div className="form-buttons">
-                <button className="btn btn-primary me-2" onClick={handleLogin}>
-                  Login
-                </button>
-                <button className="btn btn-success" onClick={handleSignUp}>
-                  Sign Up
-                </button>
+              <div className="col">
+                <div className="d-grid gap-2 d-md-flex justify-content-md-center">
+                  <button
+                    className="btn btn-primary me-2"
+                    onClick={handleLogin}
+                  >
+                    Login
+                  </button>
+                  <button className="btn btn-success" onClick={handleSignUp}>
+                    Sign Up
+                  </button>
+                </div>
+                <div>
+                  <button onClick={() => signIn("facebook")}>
+                    Log in with Facebook
+                  </button>
+                </div>
               </div>
             </div>
           </div>

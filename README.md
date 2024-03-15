@@ -95,3 +95,4 @@ npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg
 - npm i --save react-select
 - npm install react-dropzone
 - npm install react-icons
+- npm install next-auth
