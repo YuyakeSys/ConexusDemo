@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect, useState, useContext } from "react";
 import ConsultantProfile from "./consultantProfile";
-import FormProfile from "../../components/form_profile";
+import SkillInput from "../component/form_skill";
+import CityInput from "../component/form_city";
+import CountryInput from "../component/form_country";
 import EntrepreneurProfile from "./entrepreneurProfile";
 import CompanyProfile from "./companyProfile";
 import { AuthContext } from "@/app/utils/authContext";
@@ -14,6 +16,8 @@ const UserProfile = ({ params }) => {
   const [editFormData, setEditFormData] = useState({
     full_name: "",
     education: "",
+    country: "",
+    city: "",
   });
   let ChildRef = React.createRef();
 
@@ -51,6 +55,13 @@ const UserProfile = ({ params }) => {
     setEditFormData({
       ...editFormData,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleChildData = (name, value) => {
+    setEditFormData({
+      ...editFormData,
+      [name]: value,
     });
   };
 
@@ -132,7 +143,9 @@ const UserProfile = ({ params }) => {
                       value={editFormData.full_name}
                       onChange={handleFormChange}
                     />
-                    <FormProfile onRef={ChildRef} />
+                    <SkillInput onRef={ChildRef} />
+                    <CountryInput valueReceived={handleChildData} />
+                    <CityInput valueReceived={handleChildData} />
                   </div>
 
                   {/* Conditional fields based on user type */}
