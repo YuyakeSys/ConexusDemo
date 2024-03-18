@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons';
 
 
-function FormProfile(props) {
+function SkillInput(props) {
     const skillsInputRef = useRef();
     const [inputValue, setInputValue] = useState('');
     const [selectedItem, setSelectedItem] = useState([]);
@@ -151,4 +151,4 @@ function FormProfile(props) {
     );
 }
 
-export default FormProfile;
+export default SkillInput;
