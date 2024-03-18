@@ -1,107 +1,62 @@
 "use client";
-import { API_URLS } from "@/app/utils/constant";
 import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
+import Select from "react-select";
+import { API_URLS } from "@/app/utils/constant";
 
-function UserSuggestions({ handleUserSelect, removeUserSelect, userType }) {
+function UserSuggestions({ handleUserSelect, userType }) {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedUserDetails, setSelectedUserDetails] = useState([]);
-  // Component implementation remains the same...
-  const fetchSuggestions = async (inputValue, userType) => {
-    // Use the constant for the URL
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  // Fetch suggestions
+  const fetchSuggestions = async (inputValue) => {
     const response = await fetch(
       `${API_URLS.BASIC_URL}member/suggestions?name=${inputValue}&user_type=${userType}`
     );
     const data = await response.json();
-    setSuggestions(data);
+    const formattedSuggestions = data.map((user) => ({
+      value: user.id,
+      label: user.full_name,
+    }));
+    setSuggestions(formattedSuggestions);
   };
 
+  // Handle input change and fetch suggestions
   useEffect(() => {
     if (inputValue.length > 1) {
-      fetchSuggestions(inputValue, userType);
-      setShowDropdown(true);
-    } else {
-      setShowDropdown(false);
-      setSuggestions([]);
+      fetchSuggestions(inputValue);
     }
   }, [inputValue, userType]);
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-  // const handleInputChange = (event) => {
-  //   const value = event.target.value;
-  //   setInputValue(value);
-  //   if (value.length > 2) {
-  //     setShowDropdown(true);
-  //     fetchSuggestions(value);
-  //   } else {
-  //     setShowDropdown(false);
-  //     setSuggestions([]);
-  //   }
-  // };
-
-  const removeSelect = (userId) => {
-    removeUserSelect(userId);
-    // remove from selectedUserDetails
-    setSelectedUserDetails(
-      selectedUserDetails.filter((user) => user.id !== userId)
-    );
+  // Handle selection
+  const handleChange = (selectedOptions) => {
+    setSelectedOptions(selectedOptions);
+    handleUserSelect(selectedOptions.map((option) => option.value));
   };
 
-  //if user id is selected
-  const isUserSelected = (userId) => {
-    return selectedUserDetails.some((user) => user.id === userId);
-  };
+  // Create custom option renderer if needed
+  const formatOptionLabel = ({ value, label }) => (
+    <div>
+      {label} {/* Customize option rendering */}
+    </div>
+  );
 
-  const selectUser = (user) => {
-    handleUserSelect(user.id); // Update parent state
-    setSelectedUserDetails([...selectedUserDetails, user]); // Update local state
-    setShowDropdown(false);
-    setInputValue(""); // Clear the input value
+  // Load options on input change
+  const handleInputChange = (newValue) => {
+    setInputValue(newValue);
+    return newValue;
   };
 
   return (
-    <div className="position-relative">
-      <div className="selected-users">
-        {selectedUserDetails.map((user) => (
-          <div key={user.id} className="selected-user">
-            {user.full_name} {/* Display user name */}
-            <button
-              onClick={() => removeSelect(user.id)}
-              className="remove-user-btn"
-            >
-              <FontAwesomeIcon icon={faDeleteLeft} />
-            </button>
-          </div>
-        ))}
-      </div>
-      <input
-        type="text"
-        className="form-control"
-        value={inputValue}
-        onChange={handleInputChange}
-        placeholder="Search users..."
-      />
-      {showDropdown && suggestions.length > 0 && (
-        <ul className="list-group position-absolute w-100">
-          {suggestions.map((user) => (
-            <li
-              key={user.id}
-              className={`list-group-item list-group-item-action ${
-                isUserSelected(user.id) ? "disabled" : ""
-              }`}
-              onClick={() => selectUser(user)} // Pass the whole user object
-            >
-              {user.full_name}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <Select
+      isMulti 
+      value={selectedOptions}
+      onChange={handleChange}
+      options={suggestions}
+      onInputChange={handleInputChange}
+      formatOptionLabel={formatOptionLabel}
+      placeholder="Search users..."
+    />
   );
 }
 

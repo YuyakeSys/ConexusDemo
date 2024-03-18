@@ -69,17 +69,14 @@ const UserProfile = ({ params }) => {
     ChildRef.current.userSkillUpdate();
 
     // API call to update user information
-    const response = await fetch(
-      `http://127.0.0.1:3000/api/v1/users/${params.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          // Include authentication headers if needed
-        },
-        body: JSON.stringify({ user: editFormData }),
-      }
-    );
+    const response = await fetch(`${API_URLS.BASIC_URL}/users/${params.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        // Include authentication headers if needed
+      },
+      body: JSON.stringify({ user: editFormData }),
+    });
     if (response.ok) {
       setUser({ ...user, ...editFormData }); // Update local state
       setShowEditModal(false); // Close modal

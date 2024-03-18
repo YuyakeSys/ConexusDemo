@@ -86,7 +86,7 @@ const CompanyProfile = ({ user }) => {
         />
       </div>
 
-      <h3>Team Members</h3>
+      <h3>Company Members</h3>
       <div className="d-flex flex-wrap">
         {teamMembers.map((member) => (
           <a
@@ -103,6 +103,7 @@ const CompanyProfile = ({ user }) => {
           </a>
         ))}
       </div>
+      <h3>Company owners</h3>
     </div>
   );
 };
