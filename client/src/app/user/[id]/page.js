@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, useContext } from "react";
 import ConsultantProfile from "./consultantProfile";
-import FormProfile from "../../components/form_profile";
+import FormProfile from "../component/form_profile";
 import EntrepreneurProfile from "./entrepreneurProfile";
 import CompanyProfile from "./companyProfile";
 import { AuthContext } from "@/app/utils/authContext";

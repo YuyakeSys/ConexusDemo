@@ -3,7 +3,7 @@
 "use client"
 
 import React, { useState } from 'react';
-import FromProfile from '../../../components/form_profile';
+import FromProfile from '../../component/form_profile';
 
 function EditProfileForm(props) {
 
