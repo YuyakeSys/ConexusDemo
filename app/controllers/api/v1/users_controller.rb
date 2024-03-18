@@ -74,7 +74,7 @@ end
 
   def user_params
     # This allows the :full_name and :education attributes to be modified through the update action
-    params.require(:user).permit(:full_name, :education, :avatar)
+    params.require(:user).permit(:full_name, :education, :avatar, :city, :belong_to_ids)
   end
 
   def user_avatar_url(user)

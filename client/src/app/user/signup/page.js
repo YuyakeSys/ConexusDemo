@@ -14,8 +14,8 @@ export default function Signup() {
     userDetails,
     handleChange,
     handleUserSelect,
-    removeUserSelect,
     setUserDetails,
+    handleBelongToSelect,
   } = useUserDetails();
   // const [userDetails, setUserDetails] = useState({
   const [error, setError] = useState("");
@@ -145,7 +145,7 @@ export default function Signup() {
                     userDetails={userDetails}
                     handleChange={handleChange}
                     handleUserSelect={handleUserSelect}
-                    removeUserSelect={removeUserSelect}
+                    handleBelongToSelect={handleBelongToSelect}
                   />
                   <button
                     className="btn btn-primary"

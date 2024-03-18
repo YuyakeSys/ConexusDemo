@@ -25,19 +25,17 @@ function useUserDetails() {
     setUserDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
   };
 
-  const handleUserSelect = (selectedUserId) => {
-    if (!userDetails.teamMember.includes(selectedUserId)) {
-      setUserDetails((prevDetails) => ({
-        ...prevDetails,
-        teamMember: [...prevDetails.teamMember, selectedUserId],
-      }));
-    }
-  };
-
-  const removeUserSelect = (selectedUserId) => {
+  const handleUserSelect = (selectedUserIds) => {
     setUserDetails((prevDetails) => ({
       ...prevDetails,
-      teamMember: prevDetails.teamMember.filter((id) => id !== selectedUserId),
+      belong_to_ids: selectedUserIds,
+    }));
+  };
+
+  const handleBelongToSelect = (selectedUserIds) => {
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      teamMember: selectedUserIds,
     }));
   };
 
@@ -45,8 +43,8 @@ function useUserDetails() {
     userDetails,
     handleChange,
     handleUserSelect,
-    removeUserSelect,
     setUserDetails,
+    handleBelongToSelect,
   };
 }
 

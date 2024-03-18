@@ -13,7 +13,7 @@ function RoleSpecificForm({
   userDetails,
   handleChange,
   handleUserSelect,
-  removeUserSelect,
+  handleBelongToSelect,
 }) {
   const handleSelectChange = (selectedOption, fieldName) => {
     // Assuming you want to store the values in the form of an array of keys
@@ -71,8 +71,7 @@ function RoleSpecificForm({
             Company members
           </label>
           <UserSuggestions
-            handleUserSelect={handleUserSelect}
-            removeUserSelect={removeUserSelect}
+            handleUserSelect={handleBelongToSelect}
             userType={USER_TYPES.CONSULTANT}
           />
         </div>
