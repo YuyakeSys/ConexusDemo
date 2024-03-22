@@ -97,3 +97,5 @@ npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg
 - npm install react-dropzone
 - npm install react-icons
 - npm install next-auth
+- npm config set legacy-peer-deps true (This command needs to be executed before installing react-google-login to configures npm to use legacy behavior.)
+- npm install react-google-login
