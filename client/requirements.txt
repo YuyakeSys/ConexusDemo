@@ -1,0 +1,11 @@
+# Font Awesome
+@fortawesome/fontawesome-svg-core
+@fortawesome/free-solid-svg-icons
+@fortawesome/react-fontawesome
+
+# React Commands
+react-select
+react-dropzone
+react-icons
+next-auth
+country-state-city

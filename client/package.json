@@ -16,6 +16,7 @@
     "axios": "^1.6.5",
     "bootstrap": "^5.3.2",
     "cookies-next": "^4.1.0",
+    "country-state-city": "^3.2.1",
     "js-cookie": "^3.0.5",
     "next": "14.1.0",
     "next-auth": "^4.24.7",

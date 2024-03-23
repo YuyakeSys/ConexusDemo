@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_13_154836) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_20_191827) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -74,6 +74,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_13_154836) do
     t.string "team_members"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "skills", force: :cascade do |t|
@@ -123,12 +125,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_13_154836) do
     t.text "team_member"
     t.integer "belong_to_ids"
     t.string "industry"
+    t.string "country"
+    t.string "city"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "projects", "users"
   add_foreign_key "startups", "users"
   add_foreign_key "user_skills", "skills", column: "skills_id"
   add_foreign_key "user_skills", "users", column: "users_id"

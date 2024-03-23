@@ -4,6 +4,7 @@ class Api::V1::UsersController < ApplicationController
   def show
     user = User.find_by(id: params[:id])
     if user
+      projects = user.projects.select(:id, :title, :image_url)
       skill_names = user.skills.pluck(:skill_name)
       
       render json: { id: user.id, 
@@ -13,7 +14,8 @@ class Api::V1::UsersController < ApplicationController
       user_type: user.user_type,
       skills: skill_names,
       team_member: user.team_member,
-      image_url: user_avatar_url(user)
+      image_url: user_avatar_url(user),
+      projects: projects,
      }, status: :ok
     else
       render json: { error: "User not found" }, status: :not_found

@@ -97,3 +97,4 @@ npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg
 - npm install react-dropzone
 - npm install react-icons
 - npm install next-auth
+- npm i country-state-city

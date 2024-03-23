@@ -4,6 +4,14 @@ class Api::V1::ProjectsController < ApplicationController
   # GET /projects
   def index
     @projects = Project.page(params[:page]).per(20) 
+
+    # filters for projects
+    if params[:filter] == 'created_at'
+      @projects = @projects.order(created_at: :desc)
+    elsif params[:filter] == 'updated_at'
+      @projects = @projects.order(updated_at: :desc)
+    end
+
     render json: @projects
   end
 

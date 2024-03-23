@@ -35,3 +35,10 @@ export const COMPANY_STATUS_OPTIONS = [
   { value: "Bootstrap", label: "Bootstrap" },
   { value: "Failed", label: "Failed" },
 ];
+
+
+export const PROJECT_OPTIONS = [
+  { value: "default", label: "Default" },
+  { value: "created_at", label: "Created Date" },
+  { value: "updated_at", label: "Updated Date" },
+];

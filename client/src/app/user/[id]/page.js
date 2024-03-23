@@ -104,7 +104,7 @@ const UserProfile = ({ params }) => {
   if (!user) return <div>Loading...</div>;
 
   return (
-    <div className="container py-5">
+    <div className="vw-100">
       {renderProfileByType()}
       {currentUser && String(currentUser.id) === String(params.id) && (
         <button className="btn btn-primary mt-3" onClick={handleEditClick}>
