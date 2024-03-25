@@ -1,18 +1,44 @@
 // components/NavBar.js
 "use client";
 
-import { useRouter } from "next/navigation";
-
 import { React, createContext, useContext } from "react";
+
+import { useRouter } from "next/navigation";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Image from "react-bootstrap/Image";
+
 import { handleLogout } from "../utils/auth"; // adjust the path as necessary
 import { AuthContext } from "../utils/authContext";
-
-const NavUserContext = createContext();
 
 export default function NavBar() {
   const router = useRouter();
 
   const { user, setUser } = useContext(AuthContext);
+
+  const title = (
+    <div style={{ display: "flex", alignItems: "center" }}>
+      {user && user.image_url ? (
+        <Image
+          src={user.image_url}
+          alt="User Profile"
+          style={{ width: "30px", height: "30px", marginRight: "5px" }}
+          roundedCircle // Add this prop if you want the image to be circular
+        />
+      ) : (
+        <Image
+          src="https://i.imgur.com/e8buxpa.jpeg"
+          alt="Default Image"
+          style={{ width: "30px", height: "30px", marginRight: "5px" }}
+          roundedCircle // Add this prop if you want the image to be circular
+        />
+      )}
+      {user && <p className="fw-bold align-bottom">{user.full_name}</p>}
+    </div>
+  );
+
   const handleUserLogout = () => {
     handleLogout();
     setUser(null); // Update state to reflect logged out status
@@ -20,88 +46,55 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg nav-green-background">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="/">
-          <img
+    <Navbar expand="lg" className="bg-body-tertiary">
+      <Container fluid>
+        <Navbar.Brand href="/">
+          <Image
+            className="ms-3"
             src="https://images.squarespace-cdn.com/content/v1/6387732c01792d359b954e6f/e3933726-5fd7-43bf-9cfe-7b508d128121/Senpage+Consulting.png?format=1500w"
             alt="Senpage Consulting"
             style={{ height: "50px" }}
-          />{" "}
-          {/* Adjust the height as needed */}
-        </a>
-
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav navbar-expand ms-auto">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/">
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/about">
-                About
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/projects">
-                Projects
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Pricing
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/contact">
-                Contact
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Find us
-              </a>
-            </li>
-          </ul>
-          <ul className="navbar-nav ms-auto">
+          />
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto fs-4">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/about">About</Nav.Link>
+            <Nav.Link href="/projects">Projects</Nav.Link>
+            <Nav.Link href="/price">Pricing</Nav.Link>
+            <Nav.Link href="/contact">Contact</Nav.Link>
+            <Nav.Link href="#">Find us </Nav.Link>
+          </Nav>
+          <Nav placement="end" className="me-5">
             {user ? (
-              <>
-                <li className="nav-item">
-                  <a className="nav-link" href={`/user/${user.id}`}>
-                    {user.email}
-                  </a>
-                </li>
-                <li className="nav-item">
+              <NavDropdown
+                title={title}
+                id="dropdown-menu-align-responsive-1s"
+                className="me-5"
+              >
+                <NavDropdown.Item href={`/user/${user.id}`}>
+                  Profile
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item>
                   <button
                     className="btn btn-link nav-link"
                     onClick={handleUserLogout}
                   >
                     Logout
                   </button>
-                </li>
-              </>
+                </NavDropdown.Item>
+              </NavDropdown>
             ) : (
-              <li className="nav-item">
-                <a className="btn btn-success" href="/user/login">
-                  Login
-                </a>
-              </li>
+              <Nav.Link href="/user/login" className="fs-4">
+                Login
+              </Nav.Link>
             )}
-          </ul>
-        </div>
-      </div>
-    </nav>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }

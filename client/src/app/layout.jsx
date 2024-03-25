@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
         <body className={`${inter.className}`}>
           <AuthProvider>
             <NavBar />
-            <div className="mt-1 ">{children}</div>
+            <div className="mt-1">{children}</div>
           </AuthProvider>
           <Footer />
         </body>

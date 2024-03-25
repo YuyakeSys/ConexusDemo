@@ -100,3 +100,4 @@ npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg
 - npm config set legacy-peer-deps true (This command needs to be executed before installing react-google-login to configures npm to use legacy behavior.)
 - npm install react-google-login
 - npm i country-state-city
+- npm install react-bootstrap bootstrap
