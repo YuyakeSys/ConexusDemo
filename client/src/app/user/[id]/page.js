@@ -88,7 +88,6 @@ const UserProfile = ({ params }) => {
 
   //render proper user file
   const renderProfileByType = () => {
-    console.log(user);
     switch (user.user_type) {
       case "consultant":
         return <ConsultantProfile user={user} />;

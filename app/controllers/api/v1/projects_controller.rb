@@ -53,6 +53,6 @@ class Api::V1::ProjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.fetch(:project, {})
+      params.require(:project).permit(:title, :description, :industry, :requiredSkills, :resourceLinks, :state, :date, :teamMembers, :imageURL, :user_id)
     end
 end

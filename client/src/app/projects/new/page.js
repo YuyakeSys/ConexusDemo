@@ -1,10 +1,15 @@
 // pages/NewProject.js
 "use client";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { API_URLS } from "@/app/utils/constant";
+import RenderStep from "./renderStep";
+import { AuthContext } from "@/app/utils/authContext";
+import { useRouter } from "next/navigation";
 
-const NewProject = ({ currentUser }) => {
+const NewProject = () => {
+  const [currentStep, setStep] = useState(1);
+  const { user } = useContext(AuthContext);
   const [project, setProject] = useState({
     title: "",
     description: "",
@@ -14,73 +19,88 @@ const NewProject = ({ currentUser }) => {
     state: "",
     date: "",
     teamMembers: "",
+    imageURL: "",
+    user_id: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProject({ ...project, [name]: value });
   };
+  const handleSelectChange = ({ name, value }) => {
+    setProject({ ...project, [name]: value });
+  };
+
+  const handleUserSelect = (selectedUsers) => {
+    const userList = selectedUsers.map((user) => user.name).join(", "); // Assuming each user object has a 'name' property
+    setProject({ ...project, teamMembers: userList });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add API call logic here to create a new project for the current user (company)
     console.log("Submitted project:", project);
+    // Check if user is not logged in and redirect to login page
+    if (!user) {
+      const router = useRouter();
+      router.push("/user/login");
+    }
+    console.log("Submitted user id :", user.id);
+    const projectWithUserId = { ...project, user_id: String(user.id) };
+    axios
+      .post(`${API_URLS.BASIC_URL}/projects`, projectWithUserId, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("Project created successfully:", response.data);
+        // Handle success response
+      })
+      .catch((error) => {
+        console.error("Error creating project:", error);
+        // Handle error
+      });
   };
 
-  // Convert to array for easier rendering
-  const formFields = [
-    { id: "title", label: "Project Title", type: "text" },
-    { id: "description", label: "Description", type: "textarea" },
-    { id: "industry", label: "Industry", type: "text" },
-    { id: "requiredSkills", label: "Required Skills", type: "text" },
-    { id: "resourceLinks", label: "Resource Links", type: "text" },
-    { id: "state", label: "State", type: "text" },
-    { id: "date", label: "Date", type: "date" },
-    { id: "teamMembers", label: "Team Members", type: "text" },
-  ];
+  const nextStep = () => {
+    setStep(currentStep + 1);
+  };
 
-  const renderInput = ({ id, label, type }) => {
-    return (
-      <div className="mb-3" key={id}>
-        <label htmlFor={id} className="form-label">
-          {label}
-        </label>
-        {type === "textarea" ? (
-          <textarea
-            className="form-control"
-            id={id}
-            name={id}
-            value={project[id]}
-            onChange={handleChange}
-            rows="3"
-            required
-          ></textarea>
-        ) : (
-          <input
-            type={type}
-            className="form-control"
-            id={id}
-            name={id}
-            value={project[id]}
-            onChange={handleChange}
-            required
-          />
-        )}
-      </div>
-    );
+  const prevStep = () => {
+    setStep(currentStep - 1);
   };
 
   return (
     <div className="container my-5">
       <div className="row">
         <div className="col-md-8 offset-md-2">
-          <h1 className="text-center mb-5">Create New Project</h1>
+          <h1 className="text-center mb-5">New Project</h1>
           <form onSubmit={handleSubmit}>
-            {formFields.map((field) => renderInput(field))}
+            {RenderStep(
+              currentStep,
+              project,
+              handleChange,
+              handleUserSelect,
+              handleSelectChange,
+              prevStep,
+              nextStep
+            )}
             <div className="text-center mt-4">
-              <button type="submit" className="btn btn-success btn-lg">
-                Submit Project
-              </button>
+              {currentStep == 3 && (
+                <div>
+                  <button
+                    type="button"
+                    className="btn btn-primary me-2"
+                    onClick={prevStep}
+                  >
+                    Previous
+                  </button>
+                  <button type="submit" className="btn btn-success">
+                    Submit Project
+                  </button>
+                </div>
+              )}
             </div>
           </form>
         </div>

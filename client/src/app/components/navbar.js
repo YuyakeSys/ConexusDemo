@@ -58,7 +58,7 @@ export default function NavBar() {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto fs-4">
+          <Nav className="me-auto fs-5">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/about">About</Nav.Link>
             <Nav.Link href="/projects">Projects</Nav.Link>
@@ -88,7 +88,7 @@ export default function NavBar() {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <Nav.Link href="/user/login" className="fs-4">
+              <Nav.Link href="/user/login" className="fs-5 me-4">
                 Login
               </Nav.Link>
             )}
